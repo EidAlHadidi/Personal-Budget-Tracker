@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
-using PBTDataAccessLayer;
-namespace ReportsBusinessLayer
+using DAL;
+namespace BL
 {
 
     public class clsReport
@@ -48,7 +48,7 @@ namespace ReportsBusinessLayer
         {
             //call DataAccess Layer 
 
-            this.ReportID = clsReportsDataAccess.AddNewReport(this.UserID, this.ReportTypeID, this.ReportData, this.GeneratedAt, this.Description);
+            this.ReportID = DAL_Reports.AddNewReport(this.UserID, this.ReportTypeID, this.ReportData, this.GeneratedAt, this.Description);
 
             return (this.ReportID != -1);
 
@@ -58,7 +58,7 @@ namespace ReportsBusinessLayer
         {
             //call DataAccess Layer 
 
-            return clsReportsDataAccess.UpdateReport(this.ReportID, this.UserID, this.ReportTypeID, this.ReportData, this.GeneratedAt, this.Description);
+            return DAL_Reports.UpdateReport(this.ReportID, this.UserID, this.ReportTypeID, this.ReportData, this.GeneratedAt, this.Description);
 
         }
 
@@ -71,7 +71,7 @@ namespace ReportsBusinessLayer
             string Description = default;
 
 
-            if (clsReportsDataAccess.GetReportInfoByID(ReportID, ref UserID, ref ReportTypeID, ref ReportData, ref GeneratedAt, ref Description))
+            if (DAL_Reports.GetReportInfoByID(ReportID, ref UserID, ref ReportTypeID, ref ReportData, ref GeneratedAt, ref Description))
                 return new clsReport(ReportID, UserID, ReportTypeID, ReportData, GeneratedAt, Description);
             else
                 return null;
@@ -108,11 +108,11 @@ namespace ReportsBusinessLayer
             return false;
         }
 
-        public static DataTable GetAllReports() { return clsReportsDataAccess.GetAllReports(); }
+        public static DataTable GetAllReports() { return DAL_Reports.GetAllReports(); }
 
-        public static bool DeleteReport(int ReportID) { return clsReportsDataAccess.DeleteReport(ReportID); }
+        public static bool DeleteReport(int ReportID) { return DAL_Reports.DeleteReport(ReportID); }
 
-        public static bool isReportExist(int ReportID) { return clsReportsDataAccess.IsReportExist(ReportID); }
+        public static bool isReportExist(int ReportID) { return DAL_Reports.IsReportExist(ReportID); }
 
 
     }

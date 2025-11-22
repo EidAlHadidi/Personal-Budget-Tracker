@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
-using PBTDataAccessLayer;
-namespace SavingGoalsBusinessLayer
+using DAL;
+namespace BL
 {
 
-    public class clsSavingGoa
+    public class clsSavingGoal
     {
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
@@ -19,7 +19,7 @@ namespace SavingGoalsBusinessLayer
         public bool IsCompleted { get; set; }
 
 
-        public clsSavingGoa()
+        public clsSavingGoal()
         {
             this.SavingGoaID = default;
             this.UserID = default;
@@ -36,7 +36,7 @@ namespace SavingGoalsBusinessLayer
 
         }
 
-        private clsSavingGoa(int SavingGoaID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        private clsSavingGoal(int SavingGoaID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
             this.SavingGoaID = SavingGoaID;
             this.UserID = UserID;
@@ -57,7 +57,7 @@ namespace SavingGoalsBusinessLayer
         {
             //call DataAccess Layer 
 
-            this.SavingGoaID = clsSavingGoalsDataAccess.AddNewSavingGoa(this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
+            this.SavingGoaID = DAL_SavingGoals.AddNewSavingGoa(this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
 
             return (this.SavingGoaID != -1);
 
@@ -67,11 +67,11 @@ namespace SavingGoalsBusinessLayer
         {
             //call DataAccess Layer 
 
-            return clsSavingGoalsDataAccess.UpdateSavingGoa(this.SavingGoaID, this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
+            return DAL_SavingGoals.UpdateSavingGoa(this.SavingGoaID, this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
 
         }
 
-        public static clsSavingGoa Find(int SavingGoaID)
+        public static clsSavingGoal Find(int SavingGoaID)
         {
             int UserID = default;
             string GoalName = default;
@@ -83,8 +83,8 @@ namespace SavingGoalsBusinessLayer
             bool IsCompleted = default;
 
 
-            if (clsSavingGoalsDataAccess.GetSavingGoaInfoByID(SavingGoaID, ref UserID, ref GoalName, ref TargetAmount, ref CurrentAmount, ref StartDate, ref EndDate, ref Description, ref IsCompleted))
-                return new clsSavingGoa(SavingGoaID, UserID, GoalName, TargetAmount, CurrentAmount, StartDate, EndDate, Description, IsCompleted);
+            if (DAL_SavingGoals.GetSavingGoaInfoByID(SavingGoaID, ref UserID, ref GoalName, ref TargetAmount, ref CurrentAmount, ref StartDate, ref EndDate, ref Description, ref IsCompleted))
+                return new clsSavingGoal(SavingGoaID, UserID, GoalName, TargetAmount, CurrentAmount, StartDate, EndDate, Description, IsCompleted);
             else
                 return null;
 
@@ -120,11 +120,11 @@ namespace SavingGoalsBusinessLayer
             return false;
         }
 
-        public static DataTable GetAllSavingGoals() { return clsSavingGoalsDataAccess.GetAllSavingGoals(); }
+        public static DataTable GetAllSavingGoals() { return DAL_SavingGoals.GetAllSavingGoals(); }
 
-        public static bool DeleteSavingGoa(int SavingGoaID) { return clsSavingGoalsDataAccess.DeleteSavingGoa(SavingGoaID); }
+        public static bool DeleteSavingGoa(int SavingGoaID) { return DAL_SavingGoals.DeleteSavingGoa(SavingGoaID); }
 
-        public static bool isSavingGoaExist(int SavingGoaID) { return clsSavingGoalsDataAccess.IsSavingGoaExist(SavingGoaID); }
+        public static bool isSavingGoaExist(int SavingGoaID) { return DAL_SavingGoals.IsSavingGoaExist(SavingGoaID); }
 
 
     }

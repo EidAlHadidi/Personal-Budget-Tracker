@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
-using PBTDataAccessLayer;
-namespace SystemUsersBusinessLayer
+using DAL;
+namespace BL
 {
 
     public class clsSystemUser

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using DAL;
 namespace BL
 {
 
@@ -41,7 +42,7 @@ namespace BL
             string CurrencyName = default;
 
 
-            if (DAL_Categories.GetCurrencyInfoByID(CurrencyID, ref CurrencyCode, ref CurrencyName))
+            if (DAL_Currencies.GetCurrencyInfoByID(CurrencyID, ref CurrencyCode, ref CurrencyName))
                 return new clsCurrency(CurrencyID, CurrencyCode, CurrencyName);
             else
                 return null;
@@ -49,10 +50,10 @@ namespace BL
         }
 
 
-        public static DataTable GetAllCurrencies() { return clsCurrenciesDataAccess.GetAllCurrencies(); }
+        public static DataTable GetAllCurrencies() { return DAL_Currencies.GetAllCurrencies(); }
 
 
-        public static bool isCurrencyExist(int CurrencyID) { return clsCurrenciesDataAccess.IsCurrencyExist(CurrencyID); }
+        public static bool isCurrencyExist(int CurrencyID) { return DAL_Currencies.IsCurrencyExist(CurrencyID); }
 
 
     }

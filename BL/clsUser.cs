@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
-using PBTDataAccessLayer;
-namespace UsersBusinessLayer
+using DAL;
+namespace BL
 {
 
     public class clsUser
@@ -45,7 +45,7 @@ namespace UsersBusinessLayer
         {
             //call DataAccess Layer 
 
-            this.UserID = clsUsersDataAccess.AddNewUser(this.Username, this.Password, this.PrimaryCurrencyID, this.Balance);
+            this.UserID = DAL_Users.AddNewUser(this.Username, this.Password, this.PrimaryCurrencyID, this.Balance);
 
             return (this.UserID != -1);
 
@@ -55,7 +55,7 @@ namespace UsersBusinessLayer
         {
             //call DataAccess Layer 
 
-            return clsUsersDataAccess.UpdateUser(this.UserID, this.Username, this.Password, this.PrimaryCurrencyID, this.Balance);
+            return DAL_Users.UpdateUser(this.UserID, this.Username, this.Password, this.PrimaryCurrencyID, this.Balance);
 
         }
 
@@ -67,7 +67,7 @@ namespace UsersBusinessLayer
             decimal Balance = default;
 
 
-            if (clsUsersDataAccess.GetUserInfoByID(UserID, ref Username, ref Password, ref PrimaryCurrencyID, ref Balance))
+            if (DAL_Users.GetUserInfoByID(UserID, ref Username, ref Password, ref PrimaryCurrencyID, ref Balance))
                 return new clsUser(UserID, Username, Password, PrimaryCurrencyID, Balance);
             else
                 return null;
@@ -104,11 +104,11 @@ namespace UsersBusinessLayer
             return false;
         }
 
-        public static DataTable GetAllUsers() { return clsUsersDataAccess.GetAllUsers(); }
+        public static DataTable GetAllUsers() { return DAL_Users.GetAllUsers(); }
 
-        public static bool DeleteUser(int UserID) { return clsUsersDataAccess.DeleteUser(UserID); }
+        public static bool DeleteUser(int UserID) { return DAL_Users.DeleteUser(UserID); }
 
-        public static bool isUserExist(int UserID) { return clsUsersDataAccess.IsUserExist(UserID); }
+        public static bool isUserExist(int UserID) { return DAL_Users.IsUserExist(UserID); }
 
 
     }

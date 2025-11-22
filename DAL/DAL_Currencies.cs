@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    public static class clsCurrenciesDataAccess
+    public static class DAL_Currencies
     {
         public static bool GetCurrencyInfoByID(int CurrencyID, ref string CurrencyCode, ref string CurrencyName)
         {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
-using PBTDataAccessLayer;
-namespace TransactionTypesBusinessLayer
+using DAL;
+namespace BL
 {
 
     public class clsTransactionType
@@ -36,7 +36,7 @@ namespace TransactionTypesBusinessLayer
         {
             //call DataAccess Layer 
 
-            this.TransactionTypeID = clsTransactionTypesDataAccess.AddNewTransactionType(this.TransactionTypeName);
+            this.TransactionTypeID = DAL_TransactionTypes.AddNewTransactionType(this.TransactionTypeName);
 
             return (this.TransactionTypeID != -1);
 
@@ -46,7 +46,7 @@ namespace TransactionTypesBusinessLayer
         {
             //call DataAccess Layer 
 
-            return clsTransactionTypesDataAccess.UpdateTransactionType(this.TransactionTypeID, this.TransactionTypeName);
+            return DAL_TransactionTypes.UpdateTransactionType(this.TransactionTypeID, this.TransactionTypeName);
 
         }
 
@@ -55,7 +55,7 @@ namespace TransactionTypesBusinessLayer
             string TransactionTypeName = default;
 
 
-            if (clsTransactionTypesDataAccess.GetTransactionTypeInfoByID(TransactionTypeID, ref TransactionTypeName))
+            if (DAL_TransactionTypes.GetTransactionTypeInfoByID(TransactionTypeID, ref TransactionTypeName))
                 return new clsTransactionType(TransactionTypeID, TransactionTypeName);
             else
                 return null;
@@ -92,11 +92,11 @@ namespace TransactionTypesBusinessLayer
             return false;
         }
 
-        public static DataTable GetAllTransactionTypes() { return clsTransactionTypesDataAccess.GetAllTransactionTypes(); }
+        public static DataTable GetAllTransactionTypes() { return DAL_TransactionTypes.GetAllTransactionTypes(); }
 
-        public static bool DeleteTransactionType(int TransactionTypeID) { return clsTransactionTypesDataAccess.DeleteTransactionType(TransactionTypeID); }
+        public static bool DeleteTransactionType(int TransactionTypeID) { return DAL_TransactionTypes.DeleteTransactionType(TransactionTypeID); }
 
-        public static bool isTransactionTypeExist(int TransactionTypeID) { return clsTransactionTypesDataAccess.IsTransactionTypeExist(TransactionTypeID); }
+        public static bool isTransactionTypeExist(int TransactionTypeID) { return DAL_TransactionTypes.IsTransactionTypeExist(TransactionTypeID); }
 
 
     }
