@@ -10,8 +10,7 @@ namespace TestConsole
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello this is console for .NET framework");
-            Console.ReadKey();
+            
         }
     }
 }

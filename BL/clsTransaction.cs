@@ -54,7 +54,7 @@ namespace BL
         {
             //call DataAccess Layer 
 
-            this.TransactionID = clsTransactionsDataAccess.AddNewTransaction(this.UserId, this.TransactionTypeID, this.Date, this.Description, this.amount, this.CategoryID, this.ReceiptImage);
+            this.TransactionID = Convert.ToInt16(DAL_Transactions.AddNewTransaction(this.UserId, this.TransactionTypeID, this.Date, this.Description, this.amount, this.CategoryID, this.ReceiptImage));
 
             return (this.TransactionID != -1);
 
@@ -64,7 +64,7 @@ namespace BL
         {
             //call DataAccess Layer 
 
-            return clsTransactionsDataAccess.UpdateTransaction(this.TransactionID, this.UserId, this.TransactionTypeID, this.Date, this.Description, this.amount, this.CategoryID, this.ReceiptImage);
+            return DAL_Transactions.UpdateTransaction(this.TransactionID, this.UserId, this.TransactionTypeID, this.Date, this.Description, this.amount, this.CategoryID, this.ReceiptImage);
 
         }
 
@@ -79,7 +79,7 @@ namespace BL
             string ReceiptImage = default;
 
 
-            if (clsTransactionsDataAccess.GetTransactionInfoByID(TransactionID, ref UserId, ref TransactionTypeID, ref Date, ref Description, ref amount, ref CategoryID, ref ReceiptImage))
+            if (DAL_Transactions.GetTransactionInfoByID(TransactionID, ref UserId, ref TransactionTypeID, ref Date, ref Description, ref amount, ref CategoryID, ref ReceiptImage))
                 return new clsTransaction(TransactionID, UserId, TransactionTypeID, Date, Description, amount, CategoryID, ReceiptImage);
             else
                 return null;
@@ -116,11 +116,11 @@ namespace BL
             return false;
         }
 
-        public static DataTable GetAllTransactions() { return clsTransactionsDataAccess.GetAllTransactions(); }
+        public static DataTable GetAllTransactions() { return DAL_Transactions.GetAllTransactions(); }
 
-        public static bool DeleteTransaction(short TransactionID) { return clsTransactionsDataAccess.DeleteTransaction(TransactionID); }
+        public static bool DeleteTransaction(short TransactionID) { return DAL_Transactions.DeleteTransaction(TransactionID); }
 
-        public static bool isTransactionExist(short TransactionID) { return clsTransactionsDataAccess.IsTransactionExist(TransactionID); }
+        public static bool isTransactionExist(short TransactionID) { return DAL_Transactions.IsTransactionExist(TransactionID); }
 
 
     }

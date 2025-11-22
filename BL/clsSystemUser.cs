@@ -42,7 +42,7 @@ namespace BL
         {
             //call DataAccess Layer 
 
-            this.SystemUserID = clsSystemUsersDataAccess.AddNewSystemUser(this.Username, this.Password, this.Permissions);
+            this.SystemUserID = DAL_SystemUsers.AddNewSystemUser(this.Username, this.Password, this.Permissions);
 
             return (this.SystemUserID != -1);
 
@@ -52,7 +52,7 @@ namespace BL
         {
             //call DataAccess Layer 
 
-            return clsSystemUsersDataAccess.UpdateSystemUser(this.SystemUserID, this.Username, this.Password, this.Permissions);
+            return DAL_SystemUsers.UpdateSystemUser(this.SystemUserID, this.Username, this.Password, this.Permissions);
 
         }
 
@@ -63,7 +63,7 @@ namespace BL
             int Permissions = default;
 
 
-            if (clsSystemUsersDataAccess.GetSystemUserInfoByID(SystemUserID, ref Username, ref Password, ref Permissions))
+            if (DAL_SystemUsers.GetSystemUserInfoByID(SystemUserID, ref Username, ref Password, ref Permissions))
                 return new clsSystemUser(SystemUserID, Username, Password, Permissions);
             else
                 return null;
@@ -100,11 +100,11 @@ namespace BL
             return false;
         }
 
-        public static DataTable GetAllSystemUsers() { return clsSystemUsersDataAccess.GetAllSystemUsers(); }
+        public static DataTable GetAllSystemUsers() { return DAL_SystemUsers.GetAllSystemUsers(); }
 
-        public static bool DeleteSystemUser(int SystemUserID) { return clsSystemUsersDataAccess.DeleteSystemUser(SystemUserID); }
+        public static bool DeleteSystemUser(int SystemUserID) { return DAL_SystemUsers.DeleteSystemUser(SystemUserID); }
 
-        public static bool isSystemUserExist(int SystemUserID) { return clsSystemUsersDataAccess.IsSystemUserExist(SystemUserID); }
+        public static bool isSystemUserExist(int SystemUserID) { return DAL_SystemUsers.IsSystemUserExist(SystemUserID); }
 
 
     }
