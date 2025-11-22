@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Data;
 using DAL;
-using PBTDataAccessLayer;
-namespace BudgetsBusinessLayer
+namespace BL
 {
 
     public class clsBudget

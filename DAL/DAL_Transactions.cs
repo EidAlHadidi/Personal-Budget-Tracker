@@ -1,9 +1,8 @@
-﻿using DAL;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace PBTDataAccessLayer
+namespace DAL
 {
     public static class DAL_Transactions
     {

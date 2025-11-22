@@ -1,9 +1,8 @@
-﻿using DAL;
-using System;
+﻿using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace PBTDataAccessLayer
+namespace DAL
 {
     public static class DAL_SavingGoals
     {
@@ -182,7 +181,7 @@ namespace PBTDataAccessLayer
                     }
                 }
             }
-            catch (Exception ex) { clsErrorHandling.HandleError(ex); }
+            catch (Exception ex) { throw ex; }
 
             return (rowsAffected > 0);
 

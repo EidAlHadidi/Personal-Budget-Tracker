@@ -11,20 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{BED6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{2C824DAA-6BF0-4B84-B68F-A53AE5B1B18F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL codes", "DAL codes", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\..\..\MyGithub\BL\clsBudget.cs = ..\..\..\..\..\..\MyGithub\BL\clsBudget.cs
-		..\..\..\..\..\..\MyGithub\BL\clsCategory.cs = ..\..\..\..\..\..\MyGithub\BL\clsCategory.cs
-		..\..\..\..\..\..\MyGithub\BL\clsCurrency.cs = ..\..\..\..\..\..\MyGithub\BL\clsCurrency.cs
-		..\..\..\..\..\..\MyGithub\BL\clsdiagram_.cs = ..\..\..\..\..\..\MyGithub\BL\clsdiagram_.cs
-		..\..\..\..\..\..\MyGithub\BL\clsReport.cs = ..\..\..\..\..\..\MyGithub\BL\clsReport.cs
-		..\..\..\..\..\..\MyGithub\BL\clsSavingGoa.cs = ..\..\..\..\..\..\MyGithub\BL\clsSavingGoa.cs
-		..\..\..\..\..\..\MyGithub\BL\clsSystemUser.cs = ..\..\..\..\..\..\MyGithub\BL\clsSystemUser.cs
-		..\..\..\..\..\..\MyGithub\BL\clsTransaction.cs = ..\..\..\..\..\..\MyGithub\BL\clsTransaction.cs
-		..\..\..\..\..\..\MyGithub\BL\clsTransactionType.cs = ..\..\..\..\..\..\MyGithub\BL\clsTransactionType.cs
-		..\..\..\..\..\..\MyGithub\BL\clsUser.cs = ..\..\..\..\..\..\MyGithub\BL\clsUser.cs
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
