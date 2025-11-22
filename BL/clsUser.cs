@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Security.Policy;
 using DAL;
 namespace BL
 {
@@ -74,6 +75,19 @@ namespace BL
 
         }
 
+        public static clsUser Find(string Username,string Password)
+        {
+            int userID = -1, primaryCurrencyID = -1;
+            decimal balance = -1;
+            if (DAL_Users.GetUserInfoByUsernameAndPassword(Username, Password,
+                ref userID, ref primaryCurrencyID, ref balance))
+            {
+                return new clsUser(userID, Username, Password, primaryCurrencyID, balance);
+            }
+            else
+                return null;
+        }
+
         public bool Save()
         {
 
@@ -109,7 +123,6 @@ namespace BL
         public static bool DeleteUser(int UserID) { return DAL_Users.DeleteUser(UserID); }
 
         public static bool isUserExist(int UserID) { return DAL_Users.IsUserExist(UserID); }
-
 
     }
 

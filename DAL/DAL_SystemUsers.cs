@@ -47,6 +47,47 @@ namespace DAL
             return isFound;
 
         }
+
+        public static bool GetSystemUserInfoByUsernameAndPassword(string username, string password, ref int systemUserID, ref int permissions)
+        {
+            bool isFound = false;
+
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = "SELECT * FROM SystemUsers WHERE Username = @Username and Password = @Password";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Username", username);
+                        command.Parameters.AddWithValue("@Password", password);
+
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                systemUserID = Convert.ToInt32(reader["SystemUserID"]);
+                                permissions = Convert.ToInt32(reader["Permissions"]);
+
+                            }
+                            else
+                            {
+                                isFound = false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            return isFound;
+
+        }
+
         public static int AddNewSystemUser(string Username, string Password, int Permissions)
         {
 
@@ -200,7 +241,7 @@ namespace DAL
             catch (Exception ex) { throw ex; }
             return dt;
         }
-        
+
 
     }
 

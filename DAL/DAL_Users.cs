@@ -47,6 +47,49 @@ namespace DAL
             return isFound;
 
         }
+
+        public static bool GetUserInfoByUsernameAndPassword(string username, string password, 
+            ref int userID, ref int primaryCurrencyID, ref decimal balance)
+        {
+            bool isFound = false;
+
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    connection.Open();
+                    string query = @"SELECT * FROM Users WHERE Username = @Username 
+                        and Password = @Password";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Username", username);
+                        command.Parameters.AddWithValue("@Password", password);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+
+                            if (reader.Read())
+                            {
+                                isFound = true;
+
+                                userID = Convert.ToInt32(reader["UserID"]);
+                                primaryCurrencyID = Convert.ToInt32(reader["PrimaryCurrencyID"]);
+                                balance = Convert.ToDecimal(reader["Balance"]);
+
+                            }
+                            else
+                            {
+                                isFound = false;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            return isFound;
+        }
+
         public static int AddNewUser(string Username, string Password, int PrimaryCurrencyID, decimal Balance)
         {
 
@@ -91,7 +134,6 @@ namespace DAL
             return ID;
 
         }
-
 
         public static bool UpdateUser(int UserID, string Username, string Password, int PrimaryCurrencyID, decimal Balance)
         {

@@ -70,6 +70,18 @@ namespace BL
 
         }
 
+        public static clsSystemUser Find(string username,string password)
+        {
+            int permissions = -1;
+            int systemUserID = -1;
+
+
+            if (DAL_SystemUsers.GetSystemUserInfoByUsernameAndPassword(username,password,ref systemUserID,ref permissions))
+                return new clsSystemUser(systemUserID, username, password, permissions);
+            else
+                return null;
+        }
+
         public bool Save()
         {
 
