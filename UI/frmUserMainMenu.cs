@@ -56,5 +56,11 @@ namespace UI
         {
             Application.Exit();
         }
+
+        private void transactionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageTransactions(clsGlobal.LoggedInUserID);
+            frm.ShowDialog();
+        }
     }
 }

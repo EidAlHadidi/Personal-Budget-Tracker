@@ -105,7 +105,6 @@ namespace DAL
 
         }
 
-
         public static bool UpdateTransaction(short TransactionID, int UserId, int TransactionTypeID, DateTime Date, string Description, decimal amount, int CategoryID, string ReceiptImage)
         {
             int rowsAffected = 0;
@@ -232,6 +231,28 @@ namespace DAL
             return dt;
         }
 
+        public static DataTable GetSP_DisplayTransactionsForUser(int UserID)
+        {
+            DataTable dt = new DataTable();
+            using(SqlConnection conn = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                conn.Open();
+                using(SqlCommand cmd = new SqlCommand("SP_DisplayTransactionsForUser",conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("UserID", (object)UserID ?? DBNull.Value);
+                    using(SqlDataReader R = cmd.ExecuteReader())
+                    {
+                        if (R.HasRows)
+                        {
+                            dt.Load(R);
+                        }
+                    }
+                }
+            }
+
+            return dt;
+        }
 
     }
 

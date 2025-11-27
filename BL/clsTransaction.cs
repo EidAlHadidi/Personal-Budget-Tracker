@@ -118,6 +118,11 @@ namespace BL
 
         public static DataTable GetAllTransactions() { return DAL_Transactions.GetAllTransactions(); }
 
+        public static DataTable GetSP_DisplayTransactionsForUser(int UserID)
+        {
+            return DAL_Transactions.GetSP_DisplayTransactionsForUser(UserID);
+        }
+
         public static bool DeleteTransaction(short TransactionID) { return DAL_Transactions.DeleteTransaction(TransactionID); }
 
         public static bool isTransactionExist(short TransactionID) { return DAL_Transactions.IsTransactionExist(TransactionID); }
