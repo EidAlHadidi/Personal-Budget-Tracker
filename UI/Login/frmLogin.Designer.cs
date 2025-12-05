@@ -38,6 +38,7 @@
             this.btnClose = new System.Windows.Forms.Button();
             this.pbAdminPicture = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cbRememberMe = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbAdminPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -142,12 +143,26 @@
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
+            // cbRememberMe
+            // 
+            this.cbRememberMe.AutoSize = true;
+            this.cbRememberMe.Checked = true;
+            this.cbRememberMe.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbRememberMe.Location = new System.Drawing.Point(661, 311);
+            this.cbRememberMe.Margin = new System.Windows.Forms.Padding(4);
+            this.cbRememberMe.Name = "cbRememberMe";
+            this.cbRememberMe.Size = new System.Drawing.Size(119, 20);
+            this.cbRememberMe.TabIndex = 10;
+            this.cbRememberMe.Text = "Remember me";
+            this.cbRememberMe.UseVisualStyleBackColor = true;
+            // 
             // frmLogin
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(900, 471);
+            this.Controls.Add(this.cbRememberMe);
             this.Controls.Add(this.pbAdminPicture);
             this.Controls.Add(this.btnMode);
             this.Controls.Add(this.btnLogin);
@@ -181,6 +196,7 @@
         private System.Windows.Forms.Button btnLogin;
         private System.Windows.Forms.Button btnMode;
         private System.Windows.Forms.PictureBox pbAdminPicture;
+        private System.Windows.Forms.CheckBox cbRememberMe;
     }
 }
 

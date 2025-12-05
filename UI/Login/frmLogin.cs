@@ -17,14 +17,30 @@ namespace UI
 {
     public partial class frmLogin : Form
     {
-        string logPath = @"C:\Users\Eid AlHadidi\Documents\Study\1_PROGRAMMING_ADVICES_AND_MORE\C# Projects\Personal finance and budget tracker\PersonalBudgetTracker\UI\LogInfo.txt";
-        string logPathAdmin = @"C:\Users\Eid AlHadidi\Documents\Study\1_PROGRAMMING_ADVICES_AND_MORE\C# Projects\Personal finance and budget tracker\PersonalBudgetTracker\UI\LogInfoAdmin.txt";
+        static string userPath = @"C:\Users\Eid AlHadidi\Documents\Study\1_PROGRAMMING_ADVICES_AND_MORE\C# Projects\Personal finance and budget tracker\PersonalBudgetTracker\UI\LogInfo.txt";
+        static string adminPath = @"C:\Users\Eid AlHadidi\Documents\Study\1_PROGRAMMING_ADVICES_AND_MORE\C# Projects\Personal finance and budget tracker\PersonalBudgetTracker\UI\LogInfoAdmin.txt";
+        static string logPath = userPath;
         const char separator = '#';
 
         int systemUserID = -1;
         int userID = -1;
         clsUser user;
         clsSystemUser systemUser;
+
+        private void loadUsernameAndPassword()
+        {
+            StreamReader SR = new StreamReader(logPath);
+            using (SR)
+            {
+                string line = SR.ReadLine();
+                if (!string.IsNullOrEmpty(line))
+                {
+                    string[] fields = line.Split(separator);
+                    txtUsername.Text = fields[0];
+                    txtPassword.Text = fields[1];
+                }
+            }
+        }
 
         private bool checkUserAndPassword(clsGlobal.enLoginMode LoginMode)
         {
@@ -72,13 +88,14 @@ namespace UI
             txtPassword.Clear();
         }
 
-        private void updateLoginMode()
+        private void changeLoginMode()
         {
             if (clsGlobal.LoginMode == clsGlobal.enLoginMode.User)
             {
                 clsGlobal.LoginMode = clsGlobal.enLoginMode.Admin;
                 btnMode.Text = " --> User Screen";
                 lblLoginMode.Text = "Admin Login Screen";
+                logPath = adminPath;
                 pbAdminPicture.Visible = true;
             }
             else
@@ -86,9 +103,11 @@ namespace UI
                 clsGlobal.LoginMode = clsGlobal.enLoginMode.User;
                 btnMode.Text = " --> Admin Screen";
                 lblLoginMode.Text = "User Login Screen";
+                logPath = userPath;
                 pbAdminPicture.Visible = false;
             }
             clearTextBoxes();
+            loadUsernameAndPassword();
         }
 
         private void HandleSignOut(object sender)
@@ -96,7 +115,7 @@ namespace UI
             this.Show();
         }
 
-        private void LoginIn()
+        private void LogIn()
         {
             if(clsGlobal.LoginMode == clsGlobal.enLoginMode.User)
             {
@@ -116,6 +135,20 @@ namespace UI
             }
         }
 
+        private void rememberMe(string UserName, string Password)
+        {
+            StreamWriter SW = new StreamWriter(logPath);
+            if (UserName == string.Empty && Password == string.Empty)
+            {
+                return;
+            }
+            using (SW)
+            {
+                SW.WriteLine(UserName + separator + Password);
+            }
+            SW.Close();
+        }
+
         public frmLogin()
         {
             InitializeComponent();
@@ -123,12 +156,13 @@ namespace UI
 
         private void btnMode_Click(object sender, EventArgs e)
         {
-            updateLoginMode();
+            changeLoginMode();
         }
 
         private void frmLogin_Load(object sender, EventArgs e)
         {
             clsGlobal.LoginMode = clsGlobal.enLoginMode.User;
+            loadUsernameAndPassword();
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -140,7 +174,13 @@ namespace UI
             }
             else
             {
-                LoginIn();
+                if (cbRememberMe.Checked)
+                {
+                    rememberMe(txtUsername.Text.Trim(), txtPassword.Text.Trim());
+                }
+                else
+                    rememberMe("", "");
+                    LogIn();
             }
         }
 
