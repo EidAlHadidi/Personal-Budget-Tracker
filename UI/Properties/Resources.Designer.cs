@@ -123,6 +123,16 @@ namespace UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap deposit64 {
+            get {
+                object obj = ResourceManager.GetObject("deposit64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Login_logo {
             get {
                 object obj = ResourceManager.GetObject("Login logo", resourceCulture);

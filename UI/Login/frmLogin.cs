@@ -17,7 +17,8 @@ namespace UI
 {
     public partial class frmLogin : Form
     {
-        string logPath = @"C:\Users\Eid AlHadidi\Documents\Study\1_PROGRAMMING_ADVICES_AND_MORE\C# Projects\Personal finance and budget tracker\PersonalBudgetTracker\UI\LoginInfo.txt";
+        string logPath = @"C:\Users\Eid AlHadidi\Documents\Study\1_PROGRAMMING_ADVICES_AND_MORE\C# Projects\Personal finance and budget tracker\PersonalBudgetTracker\UI\LogInfo.txt";
+        string logPathAdmin = @"C:\Users\Eid AlHadidi\Documents\Study\1_PROGRAMMING_ADVICES_AND_MORE\C# Projects\Personal finance and budget tracker\PersonalBudgetTracker\UI\LogInfoAdmin.txt";
         const char separator = '#';
 
         int systemUserID = -1;

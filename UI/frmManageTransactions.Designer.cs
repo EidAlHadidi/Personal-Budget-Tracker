@@ -36,9 +36,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.btnChooseDate = new System.Windows.Forms.Button();
+            this.txtFilterBy = new System.Windows.Forms.TextBox();
             this.btnAddTransaction = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.txtFilterBy = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -92,6 +92,7 @@
             // 
             // btnClose
             // 
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.Location = new System.Drawing.Point(1015, 639);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(109, 41);
@@ -140,6 +141,15 @@
             this.btnChooseDate.Visible = false;
             this.btnChooseDate.Click += new System.EventHandler(this.btnChooseDate_Click);
             // 
+            // txtFilterBy
+            // 
+            this.txtFilterBy.Location = new System.Drawing.Point(305, 261);
+            this.txtFilterBy.Name = "txtFilterBy";
+            this.txtFilterBy.Size = new System.Drawing.Size(179, 22);
+            this.txtFilterBy.TabIndex = 19;
+            this.txtFilterBy.TextChanged += new System.EventHandler(this.txtFilterBy_TextChanged);
+            this.txtFilterBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilterBy_KeyPress);
+            // 
             // btnAddTransaction
             // 
             this.btnAddTransaction.Image = global::UI.Properties.Resources.Add_transaction_32;
@@ -160,15 +170,6 @@
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
             // 
-            // txtFilterBy
-            // 
-            this.txtFilterBy.Location = new System.Drawing.Point(305, 261);
-            this.txtFilterBy.Name = "txtFilterBy";
-            this.txtFilterBy.Size = new System.Drawing.Size(179, 22);
-            this.txtFilterBy.TabIndex = 19;
-            this.txtFilterBy.TextChanged += new System.EventHandler(this.txtFilterBy_TextChanged);
-            this.txtFilterBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilterBy_KeyPress);
-            // 
             // frmManageTransactions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -186,7 +187,9 @@
             this.Controls.Add(this.dgvTransactions);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "frmManageTransactions";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Manage Transactions";
             this.Load += new System.EventHandler(this.frmManageTransactions_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).EndInit();

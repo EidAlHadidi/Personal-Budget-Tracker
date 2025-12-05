@@ -62,5 +62,11 @@ namespace UI
             var frm = new frmManageTransactions(clsGlobal.LoggedInUserID);
             frm.ShowDialog();
         }
+
+        private void depositToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmDeposit();
+            frm.ShowDialog();
+        }
     }
 }
