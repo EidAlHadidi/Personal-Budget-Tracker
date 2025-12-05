@@ -74,5 +74,11 @@ namespace UI
             var frm = new frmWithdraw();
             frm.ShowDialog();
         }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageSavingGoals(clsGlobal.LoggedInUserID);
+            frm.ShowDialog();
+        }
     }
 }

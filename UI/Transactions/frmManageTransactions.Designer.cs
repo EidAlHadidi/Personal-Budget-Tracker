@@ -37,6 +37,8 @@
             this.cbFilterBy = new System.Windows.Forms.ComboBox();
             this.btnChooseDate = new System.Windows.Forms.Button();
             this.txtFilterBy = new System.Windows.Forms.TextBox();
+            this.btnWithdraw = new System.Windows.Forms.Button();
+            this.btnDeposit = new System.Windows.Forms.Button();
             this.btnAddTransaction = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
@@ -96,7 +98,7 @@
             this.btnClose.Location = new System.Drawing.Point(1015, 639);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(109, 41);
-            this.btnClose.TabIndex = 14;
+            this.btnClose.TabIndex = 7;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -127,7 +129,7 @@
             this.cbFilterBy.Location = new System.Drawing.Point(114, 260);
             this.cbFilterBy.Name = "cbFilterBy";
             this.cbFilterBy.Size = new System.Drawing.Size(172, 24);
-            this.cbFilterBy.TabIndex = 16;
+            this.cbFilterBy.TabIndex = 1;
             this.cbFilterBy.SelectedIndexChanged += new System.EventHandler(this.cbFilterBy_SelectedIndexChanged);
             // 
             // btnChooseDate
@@ -135,7 +137,7 @@
             this.btnChooseDate.Location = new System.Drawing.Point(500, 260);
             this.btnChooseDate.Name = "btnChooseDate";
             this.btnChooseDate.Size = new System.Drawing.Size(121, 24);
-            this.btnChooseDate.TabIndex = 17;
+            this.btnChooseDate.TabIndex = 3;
             this.btnChooseDate.Text = "Choose Date";
             this.btnChooseDate.UseVisualStyleBackColor = true;
             this.btnChooseDate.Visible = false;
@@ -146,9 +148,29 @@
             this.txtFilterBy.Location = new System.Drawing.Point(305, 261);
             this.txtFilterBy.Name = "txtFilterBy";
             this.txtFilterBy.Size = new System.Drawing.Size(179, 22);
-            this.txtFilterBy.TabIndex = 19;
+            this.txtFilterBy.TabIndex = 2;
             this.txtFilterBy.TextChanged += new System.EventHandler(this.txtFilterBy_TextChanged);
             this.txtFilterBy.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilterBy_KeyPress);
+            // 
+            // btnWithdraw
+            // 
+            this.btnWithdraw.Image = global::UI.Properties.Resources.Withdraw32;
+            this.btnWithdraw.Location = new System.Drawing.Point(852, 225);
+            this.btnWithdraw.Name = "btnWithdraw";
+            this.btnWithdraw.Size = new System.Drawing.Size(78, 71);
+            this.btnWithdraw.TabIndex = 4;
+            this.btnWithdraw.UseVisualStyleBackColor = true;
+            this.btnWithdraw.Click += new System.EventHandler(this.btnWithdraw_Click);
+            // 
+            // btnDeposit
+            // 
+            this.btnDeposit.Image = global::UI.Properties.Resources.deposit32;
+            this.btnDeposit.Location = new System.Drawing.Point(949, 225);
+            this.btnDeposit.Name = "btnDeposit";
+            this.btnDeposit.Size = new System.Drawing.Size(78, 71);
+            this.btnDeposit.TabIndex = 5;
+            this.btnDeposit.UseVisualStyleBackColor = true;
+            this.btnDeposit.Click += new System.EventHandler(this.btnDeposit_Click);
             // 
             // btnAddTransaction
             // 
@@ -156,7 +178,7 @@
             this.btnAddTransaction.Location = new System.Drawing.Point(1046, 225);
             this.btnAddTransaction.Name = "btnAddTransaction";
             this.btnAddTransaction.Size = new System.Drawing.Size(78, 71);
-            this.btnAddTransaction.TabIndex = 18;
+            this.btnAddTransaction.TabIndex = 6;
             this.btnAddTransaction.UseVisualStyleBackColor = true;
             this.btnAddTransaction.Click += new System.EventHandler(this.btnAddTransaction_Click);
             // 
@@ -176,6 +198,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(1136, 692);
+            this.Controls.Add(this.btnWithdraw);
+            this.Controls.Add(this.btnDeposit);
             this.Controls.Add(this.txtFilterBy);
             this.Controls.Add(this.btnAddTransaction);
             this.Controls.Add(this.btnChooseDate);
@@ -212,5 +236,7 @@
         private System.Windows.Forms.Button btnChooseDate;
         private System.Windows.Forms.Button btnAddTransaction;
         private System.Windows.Forms.TextBox txtFilterBy;
+        private System.Windows.Forms.Button btnDeposit;
+        private System.Windows.Forms.Button btnWithdraw;
     }
 }

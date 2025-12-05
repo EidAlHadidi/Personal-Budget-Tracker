@@ -8,7 +8,7 @@ namespace BL
     {
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
-        public int SavingGoaID { get; set; }
+        public int SavingGoalID { get; set; }
         public int UserID { get; set; }
         public string GoalName { get; set; }
         public decimal TargetAmount { get; set; }
@@ -21,7 +21,7 @@ namespace BL
 
         public clsSavingGoal()
         {
-            this.SavingGoaID = default;
+            this.SavingGoalID = default;
             this.UserID = default;
             this.GoalName = default;
             this.TargetAmount = default;
@@ -36,9 +36,9 @@ namespace BL
 
         }
 
-        private clsSavingGoal(int SavingGoaID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        private clsSavingGoal(int SavingGoalID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
-            this.SavingGoaID = SavingGoaID;
+            this.SavingGoalID = SavingGoalID;
             this.UserID = UserID;
             this.GoalName = GoalName;
             this.TargetAmount = TargetAmount;
@@ -53,25 +53,25 @@ namespace BL
 
         }
 
-        private bool _AddNewSavingGoa()
+        private bool _AddNewSavingGoal()
         {
             //call DataAccess Layer 
 
-            this.SavingGoaID = DAL_SavingGoals.AddNewSavingGoa(this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
+            this.SavingGoalID = DAL_SavingGoals.AddNewSavingGoal(this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
 
-            return (this.SavingGoaID != -1);
+            return (this.SavingGoalID != -1);
 
         }
 
-        private bool _UpdateSavingGoa()
+        private bool _UpdateSavingGoal()
         {
             //call DataAccess Layer 
 
-            return DAL_SavingGoals.UpdateSavingGoa(this.SavingGoaID, this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
+            return DAL_SavingGoals.UpdateSavingGoal(this.SavingGoalID, this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
 
         }
 
-        public static clsSavingGoal Find(int SavingGoaID)
+        public static clsSavingGoal Find(int SavingGoalID)
         {
             int UserID = default;
             string GoalName = default;
@@ -83,8 +83,8 @@ namespace BL
             bool IsCompleted = default;
 
 
-            if (DAL_SavingGoals.GetSavingGoaInfoByID(SavingGoaID, ref UserID, ref GoalName, ref TargetAmount, ref CurrentAmount, ref StartDate, ref EndDate, ref Description, ref IsCompleted))
-                return new clsSavingGoal(SavingGoaID, UserID, GoalName, TargetAmount, CurrentAmount, StartDate, EndDate, Description, IsCompleted);
+            if (DAL_SavingGoals.GetSavingGoalInfoByID(SavingGoalID, ref UserID, ref GoalName, ref TargetAmount, ref CurrentAmount, ref StartDate, ref EndDate, ref Description, ref IsCompleted))
+                return new clsSavingGoal(SavingGoalID, UserID, GoalName, TargetAmount, CurrentAmount, StartDate, EndDate, Description, IsCompleted);
             else
                 return null;
 
@@ -97,7 +97,7 @@ namespace BL
             switch (Mode)
             {
                 case enMode.AddNew:
-                    if (_AddNewSavingGoa())
+                    if (_AddNewSavingGoal())
                     {
 
                         Mode = enMode.Update;
@@ -110,7 +110,7 @@ namespace BL
 
                 case enMode.Update:
 
-                    return _UpdateSavingGoa();
+                    return _UpdateSavingGoal();
 
             }
 
@@ -122,10 +122,12 @@ namespace BL
 
         public static DataTable GetAllSavingGoals() { return DAL_SavingGoals.GetAllSavingGoals(); }
 
-        public static bool DeleteSavingGoa(int SavingGoaID) { return DAL_SavingGoals.DeleteSavingGoa(SavingGoaID); }
+        public static bool DeleteSavingGoal(int SavingGoaID) { return DAL_SavingGoals.DeleteSavingGoal(SavingGoaID); }
 
-        public static bool isSavingGoaExist(int SavingGoaID) { return DAL_SavingGoals.IsSavingGoaExist(SavingGoaID); }
+        public static bool isSavingGoalExist(int SavingGoaID) { return DAL_SavingGoals.IsSavingGoalExist(SavingGoaID); }
 
+        //A stored procedure for getting all goals for a specific user 
+        public static DataTable GetSP_DisplayGoalsForUser(int userID) => DAL_SavingGoals.GetSP_DisplayGoalsForUser(userID);
 
     }
 

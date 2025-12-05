@@ -32,10 +32,13 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.transactionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.depositToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.withdrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.savingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.withdrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -47,6 +50,7 @@
             this.transactionsToolStripMenuItem,
             this.depositToolStripMenuItem,
             this.withdrawToolStripMenuItem,
+            this.savingsToolStripMenuItem,
             this.settingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -85,6 +89,43 @@
             this.depositToolStripMenuItem.Text = "Deposit";
             this.depositToolStripMenuItem.Click += new System.EventHandler(this.depositToolStripMenuItem_Click);
             // 
+            // withdrawToolStripMenuItem
+            // 
+            this.withdrawToolStripMenuItem.Image = global::UI.Properties.Resources.Withdraw64;
+            this.withdrawToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.withdrawToolStripMenuItem.Name = "withdrawToolStripMenuItem";
+            this.withdrawToolStripMenuItem.Size = new System.Drawing.Size(151, 68);
+            this.withdrawToolStripMenuItem.Text = "Withdraw";
+            this.withdrawToolStripMenuItem.Click += new System.EventHandler(this.withdrawToolStripMenuItem_Click);
+            // 
+            // savingsToolStripMenuItem
+            // 
+            this.savingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
+            this.savingsToolStripMenuItem.Image = global::UI.Properties.Resources.Savings64;
+            this.savingsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.savingsToolStripMenuItem.Name = "savingsToolStripMenuItem";
+            this.savingsToolStripMenuItem.Size = new System.Drawing.Size(137, 68);
+            this.savingsToolStripMenuItem.Text = "Savings";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Image = global::UI.Properties.Resources.Manage_savings32;
+            this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(249, 38);
+            this.toolStripMenuItem1.Text = "Manage Saving Goals";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Image = global::UI.Properties.Resources.Add_saving32;
+            this.toolStripMenuItem2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(249, 38);
+            this.toolStripMenuItem2.Text = "Add New Saving Goal";
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -114,15 +155,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click_1);
             // 
-            // withdrawToolStripMenuItem
-            // 
-            this.withdrawToolStripMenuItem.Image = global::UI.Properties.Resources.Withdraw64;
-            this.withdrawToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.withdrawToolStripMenuItem.Name = "withdrawToolStripMenuItem";
-            this.withdrawToolStripMenuItem.Size = new System.Drawing.Size(151, 68);
-            this.withdrawToolStripMenuItem.Text = "Withdraw";
-            this.withdrawToolStripMenuItem.Click += new System.EventHandler(this.withdrawToolStripMenuItem_Click);
-            // 
             // frmUserMainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -151,5 +183,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem depositToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem withdrawToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem savingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
     }
 }

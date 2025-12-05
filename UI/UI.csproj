@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmManageSavingGoals.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmManageSavingGoals.Designer.cs">
+      <DependentUpon>frmManageSavingGoals.cs</DependentUpon>
+    </Compile>
     <Compile Include="Transactions\frmWithdraw.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmManageSavingGoals.resx">
+      <DependentUpon>frmManageSavingGoals.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Transactions\frmWithdraw.resx">
       <DependentUpon>frmWithdraw.cs</DependentUpon>
     </EmbeddedResource>
@@ -199,6 +208,33 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Saving Goals\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Savings64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Manage savings32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Add saving32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\deposit32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Withdraw32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Savings512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\update32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete saving32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

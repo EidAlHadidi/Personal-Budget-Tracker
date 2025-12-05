@@ -129,17 +129,19 @@ namespace UI
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        /*
-        Transaction ID
-        Transaction Type
-        Category
-        Date Before
-        Date After
-        Amount Less Than
-        Amount More Than 
-         */
+        private void btnDeposit_Click(object sender, EventArgs e)
+        {
+            var frm = new frmDeposit();
+            frm.ShowDialog();
+            refreshRecords();
+        }
 
-
+        private void btnWithdraw_Click(object sender, EventArgs e)
+        {
+            var frm = new frmWithdraw();
+            frm.ShowDialog();
+            refreshRecords();
+        }
 
     }
 }

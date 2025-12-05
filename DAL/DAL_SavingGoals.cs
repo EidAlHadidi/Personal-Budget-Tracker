@@ -6,7 +6,7 @@ namespace DAL
 {
     public static class DAL_SavingGoals
     {
-        public static bool GetSavingGoaInfoByID(int SavingGoaID, ref int UserID, ref string GoalName, ref decimal TargetAmount, ref decimal CurrentAmount, ref DateTime StartDate, ref DateTime EndDate, ref string Description, ref bool IsCompleted)
+        public static bool GetSavingGoalInfoByID(int SavingGoaID, ref int UserID, ref string GoalName, ref decimal TargetAmount, ref decimal CurrentAmount, ref DateTime StartDate, ref DateTime EndDate, ref string Description, ref bool IsCompleted)
         {
             bool isFound = false;
 
@@ -51,7 +51,7 @@ namespace DAL
             return isFound;
 
         }
-        public static int AddNewSavingGoa(int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        public static int AddNewSavingGoal(int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
 
             int ID = -1;
@@ -109,7 +109,7 @@ namespace DAL
         }
 
 
-        public static bool UpdateSavingGoa(int SavingGoaID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        public static bool UpdateSavingGoal(int SavingGoaID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
             int rowsAffected = 0;
 
@@ -163,7 +163,7 @@ namespace DAL
             return (rowsAffected > 0);
 
         }
-        public static bool DeleteSavingGoa(int SavingGoaID)
+        public static bool DeleteSavingGoal(int SavingGoaID)
         {
             int rowsAffected = 0;
             try
@@ -187,7 +187,7 @@ namespace DAL
 
         }
 
-        public static bool IsSavingGoaExist(int SavingGoaID)
+        public static bool IsSavingGoalExist(int SavingGoaID)
         {
             bool isFound = false;
             try
@@ -241,7 +241,27 @@ namespace DAL
             return dt;
         }
 
+        public static DataTable GetSP_DisplayGoalsForUser(int userID)
+        {
+            DataTable dt = new DataTable();
 
+            using(SqlConnection conn = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                conn.Open();
+                using(SqlCommand cmd = new SqlCommand("SP_DisplayGoalsForUser",conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("UserID", (object)userID ?? DBNull.Value);
+                    using(SqlDataReader R = cmd.ExecuteReader())
+                    {
+                        if (R.HasRows)
+                            dt.Load(R);
+                    }
+                }
+            }
+
+            return dt;
+        }
     }
 
 }
