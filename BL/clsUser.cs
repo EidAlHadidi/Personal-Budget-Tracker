@@ -118,6 +118,18 @@ namespace BL
             return false;
         }
 
+        public bool AddToBalance(decimal amount)
+        {
+            this.Balance += amount;
+            return _UpdateUser();
+        }
+
+        public bool SubtractToBalance(decimal amount)
+        {
+            this.Balance -= amount;
+            return _UpdateUser();
+        }
+
         public static DataTable GetAllUsers() { return DAL_Users.GetAllUsers(); }
 
         public static bool DeleteUser(int UserID) { return DAL_Users.DeleteUser(UserID); }

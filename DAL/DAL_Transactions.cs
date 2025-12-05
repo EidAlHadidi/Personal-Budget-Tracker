@@ -6,7 +6,7 @@ namespace DAL
 {
     public static class DAL_Transactions
     {
-        public static bool GetTransactionInfoByID(short TransactionID, ref int UserId, ref int TransactionTypeID, ref DateTime Date, ref string Description, ref decimal amount, ref int CategoryID, ref string ReceiptImage)
+        public static bool GetTransactionInfoByID(int TransactionID, ref int UserId, ref int TransactionTypeID, ref DateTime Date,ref TimeSpan Time ,ref string Description, ref decimal amount, ref int CategoryID, ref string ReceiptImage)
         {
             bool isFound = false;
 
@@ -32,6 +32,7 @@ namespace DAL
                                 UserId = (int)reader["UserId"];
                                 TransactionTypeID = (int)reader["TransactionTypeID"];
                                 Date = (DateTime)reader["Date"];
+                                Time = (TimeSpan)reader["Time"];
                                 Description = reader["Description"] != DBNull.Value ? (string)reader["Description"] : Description = default;
                                 amount = (decimal)reader["amount"];
                                 CategoryID = (int)reader["CategoryID"];
@@ -59,8 +60,11 @@ namespace DAL
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
 
-                    string query = @"INSERT INTO Transactions VALUES (@UserId, @TransactionTypeID, @Date, @Description, @amount, @CategoryID, @ReceiptImage)
-        SELECT SCOPE_IDENTITY()";
+                    string query = @"INSERT INTO
+                            Transactions 
+                            (UserID,TransactionTypeID,CategoryID,Date,Time,Description,Amount,ReceiptImage)
+                            VALUES (@UserId, @TransactionTypeID, cast(@Date as date),@Time, @Description, @amount, @CategoryID, @ReceiptImage)
+                            SELECT SCOPE_IDENTITY()";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -71,6 +75,8 @@ namespace DAL
                         command.Parameters.AddWithValue("@TransactionTypeID", TransactionTypeID);
 
                         command.Parameters.AddWithValue("@Date", Date);
+
+                        command.Parameters.AddWithValue("@Time", Date.TimeOfDay);
 
                         if (Description == null)
                             command.Parameters.AddWithValue("@Description", DBNull.Value);
@@ -84,8 +90,6 @@ namespace DAL
                             command.Parameters.AddWithValue("@ReceiptImage", DBNull.Value);
                         else
                             command.Parameters.AddWithValue("@ReceiptImage", ReceiptImage);
-
-
 
                         connection.Open();
 
@@ -105,7 +109,7 @@ namespace DAL
 
         }
 
-        public static bool UpdateTransaction(short TransactionID, int UserId, int TransactionTypeID, DateTime Date, string Description, decimal amount, int CategoryID, string ReceiptImage)
+        public static bool UpdateTransaction(int TransactionID, int UserId, int TransactionTypeID, DateTime Date, string Description, decimal amount, int CategoryID, string ReceiptImage)
         {
             int rowsAffected = 0;
 
@@ -118,6 +122,7 @@ namespace DAL
 	SET	UserId = @UserId,
 	TransactionTypeID = @TransactionTypeID,
 	Date = @Date,
+    Time = @Time,
 	Description = @Description,
 	amount = @amount,
 	CategoryID = @CategoryID,
@@ -133,6 +138,8 @@ namespace DAL
                         command.Parameters.AddWithValue("@TransactionTypeID", TransactionTypeID);
 
                         command.Parameters.AddWithValue("@Date", Date);
+
+                        command.Parameters.AddWithValue("@Time", Date.TimeOfDay);
 
                         if (Description == null)
                             command.Parameters.AddWithValue("@Description", DBNull.Value);
@@ -156,7 +163,7 @@ namespace DAL
             return (rowsAffected > 0);
 
         }
-        public static bool DeleteTransaction(short TransactionID)
+        public static bool DeleteTransaction(int TransactionID)
         {
             int rowsAffected = 0;
             try
@@ -179,7 +186,7 @@ namespace DAL
 
         }
 
-        public static bool IsTransactionExist(short TransactionID)
+        public static bool IsTransactionExist(int TransactionID)
         {
             bool isFound = false;
             try
@@ -253,6 +260,73 @@ namespace DAL
 
             return dt;
         }
+
+        //Modified version of add new method
+        public static int AddNewTransaction_Modified(int userId,int transactionTypeID,DateTime date,string description,decimal amount,int categoryID,string receiptImage)
+        {
+            int InsertedID = -1;
+
+            string query = @"
+        INSERT INTO dbo.Transactions
+        (UserID, TransactionTypeID, CategoryID, [Date], [Time], Description, Amount, ReceiptImage)
+        VALUES
+        (@UserID, @TransactionTypeID, @CategoryID, CAST(@Date AS DATE), @Time, @Description, @Amount, @ReceiptImage);
+
+        SELECT CAST(SCOPE_IDENTITY() AS INT);
+    ";
+
+            using (SqlConnection conn = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                conn.Open();
+
+                using (SqlTransaction transaction = conn.BeginTransaction())
+                {
+                    try
+                    {
+                        using (SqlCommand cmd = new SqlCommand(query, conn, transaction))
+                        {
+                            cmd.Parameters.AddWithValue("@UserID", userId);
+                            cmd.Parameters.AddWithValue("@TransactionTypeID", transactionTypeID);
+
+                            cmd.Parameters.Add("@CategoryID", SqlDbType.Int).Value =
+                                categoryID != -1 ? (object)categoryID : DBNull.Value;
+
+                            cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = date;
+                            cmd.Parameters.Add("@Time", SqlDbType.Time).Value = date.TimeOfDay;
+
+                            if (string.IsNullOrEmpty(description))
+                            {
+                                cmd.Parameters.AddWithValue("@Description", DBNull.Value);
+                            } else
+                                cmd.Parameters.AddWithValue("@Description", description);
+
+                            cmd.Parameters.Add("@Amount", SqlDbType.Decimal).Value = amount;
+
+                            if (string.IsNullOrEmpty(receiptImage))
+                            {
+                                cmd.Parameters.AddWithValue("@ReceiptImage", DBNull.Value);
+                            }
+                            else
+                                cmd.Parameters.AddWithValue("@ReceiptImage", receiptImage);
+
+                            object R = cmd.ExecuteScalar();
+                            InsertedID = Convert.ToInt32(R);
+
+                            transaction.Commit();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message); // important for debugging
+                        transaction.Rollback();
+                        return -1;
+                    }
+                }
+            }
+
+            return InsertedID;
+        }
+
 
     }
 

@@ -68,5 +68,11 @@ namespace UI
             var frm = new frmDeposit();
             frm.ShowDialog();
         }
+
+        private void withdrawToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmWithdraw();
+            frm.ShowDialog();
+        }
     }
 }

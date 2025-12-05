@@ -47,35 +47,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsGlobal.cs" />
-    <Compile Include="frmAdminMainMenu.cs">
+    <Compile Include="Transactions\frmWithdraw.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAdminMainMenu.Designer.cs">
+    <Compile Include="Transactions\frmWithdraw.Designer.cs">
+      <DependentUpon>frmWithdraw.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Misc\clsGlobal.cs" />
+    <Compile Include="Main menu\frmAdminMainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main menu\frmAdminMainMenu.Designer.cs">
       <DependentUpon>frmAdminMainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmChooseDate.cs">
+    <Compile Include="Misc\frmChooseDate.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmChooseDate.Designer.cs">
+    <Compile Include="Misc\frmChooseDate.Designer.cs">
       <DependentUpon>frmChooseDate.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmDeposit.cs">
+    <Compile Include="Transactions\frmDeposit.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmDeposit.Designer.cs">
+    <Compile Include="Transactions\frmDeposit.Designer.cs">
       <DependentUpon>frmDeposit.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmManageTransactions.cs">
+    <Compile Include="Transactions\frmManageTransactions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmManageTransactions.Designer.cs">
+    <Compile Include="Transactions\frmManageTransactions.Designer.cs">
       <DependentUpon>frmManageTransactions.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmUserMainMenu.cs">
+    <Compile Include="Main menu\frmUserMainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmUserMainMenu.Designer.cs">
+    <Compile Include="Main menu\frmUserMainMenu.Designer.cs">
       <DependentUpon>frmUserMainMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Login\frmLogin.cs">
@@ -84,33 +90,36 @@
     <Compile Include="Login\frmLogin.Designer.cs">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmRecentlyUsed.cs">
+    <Compile Include="Misc\frmRecentlyUsed.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmRecentlyUsed.Designer.cs">
+    <Compile Include="Misc\frmRecentlyUsed.Designer.cs">
       <DependentUpon>frmRecentlyUsed.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmAdminMainMenu.resx">
+    <EmbeddedResource Include="Transactions\frmWithdraw.resx">
+      <DependentUpon>frmWithdraw.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main menu\frmAdminMainMenu.resx">
       <DependentUpon>frmAdminMainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmChooseDate.resx">
+    <EmbeddedResource Include="Misc\frmChooseDate.resx">
       <DependentUpon>frmChooseDate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmDeposit.resx">
+    <EmbeddedResource Include="Transactions\frmDeposit.resx">
       <DependentUpon>frmDeposit.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmManageTransactions.resx">
+    <EmbeddedResource Include="Transactions\frmManageTransactions.resx">
       <DependentUpon>frmManageTransactions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmUserMainMenu.resx">
+    <EmbeddedResource Include="Main menu\frmUserMainMenu.resx">
       <DependentUpon>frmUserMainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login\frmLogin.resx">
       <DependentUpon>frmLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmRecentlyUsed.resx">
+    <EmbeddedResource Include="Misc\frmRecentlyUsed.resx">
       <DependentUpon>frmRecentlyUsed.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -184,6 +193,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\deposit64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Withdraw64.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Saving Goals\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

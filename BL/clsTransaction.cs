@@ -8,7 +8,7 @@ namespace BL
     {
         public enum enMode { AddNew = 0, Update = 1 };
         public enMode Mode = enMode.AddNew;
-        public short TransactionID { get; set; }
+        public int TransactionID { get; set; }
         public int UserId { get; set; }
         public int TransactionTypeID { get; set; }
         public DateTime Date { get; set; }
@@ -34,7 +34,7 @@ namespace BL
 
         }
 
-        private clsTransaction(short TransactionID, int UserId, int TransactionTypeID, DateTime Date, string Description, decimal amount, int CategoryID, string ReceiptImage)
+        private clsTransaction(int TransactionID, int UserId, int TransactionTypeID, DateTime Date, string Description, decimal amount, int CategoryID, string ReceiptImage)
         {
             this.TransactionID = TransactionID;
             this.UserId = UserId;
@@ -53,11 +53,10 @@ namespace BL
         private bool _AddNewTransaction()
         {
             //call DataAccess Layer 
-
-            this.TransactionID = Convert.ToInt16(DAL_Transactions.AddNewTransaction(this.UserId, this.TransactionTypeID, this.Date, this.Description, this.amount, this.CategoryID, this.ReceiptImage));
-
+            this.TransactionID = Convert.ToInt32(DAL_Transactions.
+                AddNewTransaction_Modified(this.UserId, this.TransactionTypeID, this.Date,
+                this.Description, this.amount, this.CategoryID, this.ReceiptImage));
             return (this.TransactionID != -1);
-
         }
 
         private bool _UpdateTransaction()
@@ -77,9 +76,9 @@ namespace BL
             decimal amount = default;
             int CategoryID = default;
             string ReceiptImage = default;
+            TimeSpan TS = TimeSpan.Zero;
 
-
-            if (DAL_Transactions.GetTransactionInfoByID(TransactionID, ref UserId, ref TransactionTypeID, ref Date, ref Description, ref amount, ref CategoryID, ref ReceiptImage))
+            if (DAL_Transactions.GetTransactionInfoByID(TransactionID, ref UserId, ref TransactionTypeID, ref Date, ref TS,ref Description, ref amount, ref CategoryID, ref ReceiptImage))
                 return new clsTransaction(TransactionID, UserId, TransactionTypeID, Date, Description, amount, CategoryID, ReceiptImage);
             else
                 return null;
@@ -109,9 +108,6 @@ namespace BL
                     return _UpdateTransaction();
 
             }
-
-
-
 
             return false;
         }
