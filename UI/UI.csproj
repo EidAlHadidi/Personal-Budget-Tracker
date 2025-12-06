@@ -47,17 +47,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="frmAddSavingGoal.cs">
+    <Compile Include="Saving Goals\ctrlSavingGoalInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Saving Goals\ctrlSavingGoalInfo.Designer.cs">
+      <DependentUpon>ctrlSavingGoalInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saving Goals\frmAddAmountToGoal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmAddSavingGoal.Designer.cs">
+    <Compile Include="Saving Goals\frmAddAmountToGoal.Designer.cs">
+      <DependentUpon>frmAddAmountToGoal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saving Goals\frmAddSavingGoal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saving Goals\frmAddSavingGoal.Designer.cs">
       <DependentUpon>frmAddSavingGoal.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmManageSavingGoals.cs">
+    <Compile Include="Saving Goals\frmManageSavingGoals.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmManageSavingGoals.Designer.cs">
+    <Compile Include="Saving Goals\frmManageSavingGoals.Designer.cs">
       <DependentUpon>frmManageSavingGoals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Saving Goals\frmSavingGoalInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Saving Goals\frmSavingGoalInfo.Designer.cs">
+      <DependentUpon>frmSavingGoalInfo.cs</DependentUpon>
     </Compile>
     <Compile Include="Transactions\frmWithdraw.cs">
       <SubType>Form</SubType>
@@ -110,11 +128,20 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="frmAddSavingGoal.resx">
+    <EmbeddedResource Include="Saving Goals\ctrlSavingGoalInfo.resx">
+      <DependentUpon>ctrlSavingGoalInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saving Goals\frmAddAmountToGoal.resx">
+      <DependentUpon>frmAddAmountToGoal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saving Goals\frmAddSavingGoal.resx">
       <DependentUpon>frmAddSavingGoal.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmManageSavingGoals.resx">
+    <EmbeddedResource Include="Saving Goals\frmManageSavingGoals.resx">
       <DependentUpon>frmManageSavingGoals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Saving Goals\frmSavingGoalInfo.resx">
+      <DependentUpon>frmSavingGoalInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Transactions\frmWithdraw.resx">
       <DependentUpon>frmWithdraw.cs</DependentUpon>
@@ -215,9 +242,7 @@
   <ItemGroup>
     <None Include="Resources\Withdraw64.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Saving Goals\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Resources\Savings64.png" />
   </ItemGroup>
@@ -244,6 +269,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Delete saving32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Completed32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Savings32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

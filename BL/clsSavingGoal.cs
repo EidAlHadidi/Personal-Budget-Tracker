@@ -123,12 +123,17 @@ namespace BL
 
         public static DataTable GetAllSavingGoals() { return DAL_SavingGoals.GetAllSavingGoals(); }
 
-        public static bool DeleteSavingGoal(int SavingGoaID) { return DAL_SavingGoals.DeleteSavingGoal(SavingGoaID); }
+        public static bool DeleteSavingGoal(int SavingGoalID) { return DAL_SavingGoals.DeleteSavingGoal(SavingGoalID); }
 
-        public static bool isSavingGoalExist(int SavingGoaID) { return DAL_SavingGoals.IsSavingGoalExist(SavingGoaID); }
+        public static bool isSavingGoalExist(int SavingGoalID) { return DAL_SavingGoals.IsSavingGoalExist(SavingGoalID); }
 
         //A stored procedure for getting all goals for a specific user 
         public static DataTable GetSP_DisplayGoalsForUser(int userID) => DAL_SavingGoals.GetSP_DisplayGoalsForUser(userID);
+
+        public static bool GetTotalSavedMoney(int userID, ref decimal currentSavedMoney, ref decimal totalSavedMoney)
+        {
+            return DAL_SavingGoals.GetTotalSavedMoney(userID, ref currentSavedMoney, ref totalSavedMoney);
+        }
 
     }
 

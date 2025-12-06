@@ -29,16 +29,21 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.transactionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.depositsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.expensesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transfersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.allToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.depositToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.withdrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.savingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.showTotalAmountSavedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.signOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -58,14 +63,67 @@
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::UI.Properties.Resources.UserMM;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 72);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1056, 493);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // transactionsToolStripMenuItem
             // 
+            this.transactionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.depositsToolStripMenuItem,
+            this.expensesToolStripMenuItem,
+            this.transfersToolStripMenuItem,
+            this.allToolStripMenuItem});
             this.transactionsToolStripMenuItem.Image = global::UI.Properties.Resources.transaction64;
             this.transactionsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.transactionsToolStripMenuItem.Name = "transactionsToolStripMenuItem";
             this.transactionsToolStripMenuItem.Size = new System.Drawing.Size(168, 68);
             this.transactionsToolStripMenuItem.Text = "Transactions";
-            this.transactionsToolStripMenuItem.Click += new System.EventHandler(this.transactionsToolStripMenuItem_Click);
+            // 
+            // depositsToolStripMenuItem
+            // 
+            this.depositsToolStripMenuItem.Image = global::UI.Properties.Resources.deposit321;
+            this.depositsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.depositsToolStripMenuItem.Name = "depositsToolStripMenuItem";
+            this.depositsToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.depositsToolStripMenuItem.Text = "Deposits";
+            this.depositsToolStripMenuItem.Click += new System.EventHandler(this.depositsToolStripMenuItem_Click);
+            // 
+            // expensesToolStripMenuItem
+            // 
+            this.expensesToolStripMenuItem.Image = global::UI.Properties.Resources.Withdraw321;
+            this.expensesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.expensesToolStripMenuItem.Name = "expensesToolStripMenuItem";
+            this.expensesToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.expensesToolStripMenuItem.Text = "Expenses";
+            this.expensesToolStripMenuItem.Click += new System.EventHandler(this.expensesToolStripMenuItem_Click);
+            // 
+            // transfersToolStripMenuItem
+            // 
+            this.transfersToolStripMenuItem.Image = global::UI.Properties.Resources.transaction322;
+            this.transfersToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.transfersToolStripMenuItem.Name = "transfersToolStripMenuItem";
+            this.transfersToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.transfersToolStripMenuItem.Text = "Transfers";
+            this.transfersToolStripMenuItem.Click += new System.EventHandler(this.transfersToolStripMenuItem_Click);
+            // 
+            // allToolStripMenuItem
+            // 
+            this.allToolStripMenuItem.Image = global::UI.Properties.Resources.transaction321;
+            this.allToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.allToolStripMenuItem.Name = "allToolStripMenuItem";
+            this.allToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.allToolStripMenuItem.Text = "All";
+            this.allToolStripMenuItem.Click += new System.EventHandler(this.allToolStripMenuItem_Click);
             // 
             // depositToolStripMenuItem
             // 
@@ -89,7 +147,8 @@
             // 
             this.savingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem1,
-            this.toolStripMenuItem2});
+            this.toolStripMenuItem2,
+            this.showTotalAmountSavedToolStripMenuItem});
             this.savingsToolStripMenuItem.Image = global::UI.Properties.Resources.Savings64;
             this.savingsToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.savingsToolStripMenuItem.Name = "savingsToolStripMenuItem";
@@ -101,7 +160,7 @@
             this.toolStripMenuItem1.Image = global::UI.Properties.Resources.Manage_savings32;
             this.toolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(249, 38);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(278, 38);
             this.toolStripMenuItem1.Text = "Manage Saving Goals";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
@@ -110,9 +169,18 @@
             this.toolStripMenuItem2.Image = global::UI.Properties.Resources.Add_saving32;
             this.toolStripMenuItem2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(249, 38);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(278, 38);
             this.toolStripMenuItem2.Text = "Add New Saving Goal";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // showTotalAmountSavedToolStripMenuItem
+            // 
+            this.showTotalAmountSavedToolStripMenuItem.Image = global::UI.Properties.Resources.Savings32;
+            this.showTotalAmountSavedToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.showTotalAmountSavedToolStripMenuItem.Name = "showTotalAmountSavedToolStripMenuItem";
+            this.showTotalAmountSavedToolStripMenuItem.Size = new System.Drawing.Size(278, 38);
+            this.showTotalAmountSavedToolStripMenuItem.Text = "Show Total Amount Saved";
+            this.showTotalAmountSavedToolStripMenuItem.Click += new System.EventHandler(this.showTotalAmountSavedToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -130,7 +198,7 @@
             this.signOutToolStripMenuItem.Image = global::UI.Properties.Resources.logout32;
             this.signOutToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.signOutToolStripMenuItem.Name = "signOutToolStripMenuItem";
-            this.signOutToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.signOutToolStripMenuItem.Size = new System.Drawing.Size(159, 38);
             this.signOutToolStripMenuItem.Text = "Sign out";
             this.signOutToolStripMenuItem.Click += new System.EventHandler(this.signOutToolStripMenuItem_Click_1);
             // 
@@ -139,22 +207,9 @@
             this.exitToolStripMenuItem.Image = global::UI.Properties.Resources.cancel_32;
             this.exitToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(236, 38);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(159, 38);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click_1);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = global::UI.Properties.Resources.UserMM;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 72);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1056, 493);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // frmUserMainMenu
             // 
@@ -187,5 +242,10 @@
         private System.Windows.Forms.ToolStripMenuItem savingsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem showTotalAmountSavedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem depositsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem expensesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem allToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem transfersToolStripMenuItem;
     }
 }

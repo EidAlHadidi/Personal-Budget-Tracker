@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DAL;
 using Microsoft.Win32.SafeHandles;
 using UI;
+using BL;
 
 namespace TestConsole
 {
@@ -14,6 +15,8 @@ namespace TestConsole
     {
         static void Main(string[] args)
         {
+            string value = Console.ReadLine();
+            Console.WriteLine(clsGlobal.ComputeHash(value));
             Console.ReadKey();
         }
     }

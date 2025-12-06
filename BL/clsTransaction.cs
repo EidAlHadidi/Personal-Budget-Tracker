@@ -17,7 +17,7 @@ namespace BL
         public int CategoryID { get; set; }
         public string ReceiptImage { get; set; }
 
-
+        public int GoalID { get; set; } = -1;
         public clsTransaction()
         {
             this.TransactionID = default;
@@ -55,7 +55,7 @@ namespace BL
             //call DataAccess Layer 
             this.TransactionID = Convert.ToInt32(DAL_Transactions.
                 AddNewTransaction_Modified(this.UserId, this.TransactionTypeID, this.Date,
-                this.Description, this.amount, this.CategoryID, this.ReceiptImage));
+                this.Description, this.amount, this.CategoryID, this.ReceiptImage,this.GoalID));
             return (this.TransactionID != -1);
         }
 
@@ -69,7 +69,7 @@ namespace BL
 
         public static clsTransaction Find(short TransactionID)
         {
-            int UserId = default;
+            int UserId = default,GoalID = -1;
             int TransactionTypeID = default;
             DateTime Date = default;
             string Description = default;
@@ -78,7 +78,7 @@ namespace BL
             string ReceiptImage = default;
             TimeSpan TS = TimeSpan.Zero;
 
-            if (DAL_Transactions.GetTransactionInfoByID(TransactionID, ref UserId, ref TransactionTypeID, ref Date, ref TS,ref Description, ref amount, ref CategoryID, ref ReceiptImage))
+            if (DAL_Transactions.GetTransactionInfoByID(TransactionID, ref UserId, ref TransactionTypeID, ref Date, ref TS,ref Description, ref amount, ref CategoryID, ref ReceiptImage, ref GoalID))
                 return new clsTransaction(TransactionID, UserId, TransactionTypeID, Date, Description, amount, CategoryID, ReceiptImage);
             else
                 return null;

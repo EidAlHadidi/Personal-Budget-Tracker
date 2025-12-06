@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -57,12 +58,6 @@ namespace UI
             Application.Exit();
         }
 
-        private void transactionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var frm = new frmManageTransactions(clsGlobal.LoggedInUserID);
-            frm.ShowDialog();
-        }
-
         private void depositToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmDeposit();
@@ -84,6 +79,46 @@ namespace UI
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
             var frm = new frmAddSavingGoal();
+            frm.ShowDialog();
+        }
+
+        private void showTotalAmountSavedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            decimal CurrentSavedMoney = -1;
+            decimal TotalSavedMoney = -1;
+            bool Saved = clsSavingGoal.GetTotalSavedMoney(clsGlobal.LoggedInUserID, ref CurrentSavedMoney, ref TotalSavedMoney);
+            if (Saved)
+            {
+                MessageBox.Show($"Current Saved Money = {CurrentSavedMoney}\n" +
+                                $"Total Saved Money = {TotalSavedMoney}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("No information available", "No info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void allToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageTransactions(clsGlobal.LoggedInUserID,frmManageTransactions.enMode.All);
+            frm.ShowDialog();
+        }
+
+        private void depositsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageTransactions(clsGlobal.LoggedInUserID, frmManageTransactions.enMode.Deposits);
+            frm.ShowDialog();
+        }
+
+        private void expensesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageTransactions(clsGlobal.LoggedInUserID, frmManageTransactions.enMode.Expenses);
+            frm.ShowDialog();
+        }
+
+        private void transfersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmManageTransactions(clsGlobal.LoggedInUserID, frmManageTransactions.enMode.Transfers);
             frm.ShowDialog();
         }
     }

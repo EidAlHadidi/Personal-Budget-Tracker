@@ -6,7 +6,7 @@ namespace DAL
 {
     public static class DAL_Transactions
     {
-        public static bool GetTransactionInfoByID(int TransactionID, ref int UserId, ref int TransactionTypeID, ref DateTime Date,ref TimeSpan Time ,ref string Description, ref decimal amount, ref int CategoryID, ref string ReceiptImage)
+        public static bool GetTransactionInfoByID(int TransactionID, ref int UserId, ref int TransactionTypeID, ref DateTime Date,ref TimeSpan Time ,ref string Description, ref decimal amount, ref int CategoryID, ref string ReceiptImage, ref int GoalID)
         {
             bool isFound = false;
 
@@ -37,7 +37,7 @@ namespace DAL
                                 amount = (decimal)reader["amount"];
                                 CategoryID = (int)reader["CategoryID"];
                                 ReceiptImage = reader["ReceiptImage"] != DBNull.Value ? (string)reader["ReceiptImage"] : ReceiptImage = default;
-
+                                GoalID = reader["GoalID"] != DBNull.Value ? (int)reader["GoalID"] : -1;
                             }
                             else
                             {
@@ -51,7 +51,7 @@ namespace DAL
             return isFound;
 
         }
-        public static int AddNewTransaction(int UserId, int TransactionTypeID, DateTime Date, string Description, decimal amount, int CategoryID, string ReceiptImage)
+        public static int AddNewTransaction(int UserId, int TransactionTypeID, DateTime Date, string Description, decimal amount, int CategoryID, string ReceiptImage, int GoalID)
         {
 
             int ID = -1;
@@ -262,15 +262,15 @@ namespace DAL
         }
 
         //Modified version of add new method
-        public static int AddNewTransaction_Modified(int userId,int transactionTypeID,DateTime date,string description,decimal amount,int categoryID,string receiptImage)
+        public static int AddNewTransaction_Modified(int userId,int transactionTypeID,DateTime date,string description,decimal amount,int categoryID,string receiptImage,int GoalID)
         {
             int InsertedID = -1;
 
             string query = @"
         INSERT INTO dbo.Transactions
-        (UserID, TransactionTypeID, CategoryID, [Date], [Time], Description, Amount, ReceiptImage)
+        (UserID, TransactionTypeID, CategoryID, [Date], [Time], Description, Amount, ReceiptImage,GoalID)
         VALUES
-        (@UserID, @TransactionTypeID, @CategoryID, CAST(@Date AS DATE), @Time, @Description, @Amount, @ReceiptImage);
+        (@UserID, @TransactionTypeID, @CategoryID, CAST(@Date AS DATE), @Time, @Description, @Amount, @ReceiptImage,@GoalID);
 
         SELECT CAST(SCOPE_IDENTITY() AS INT);
     ";
@@ -308,6 +308,13 @@ namespace DAL
                             }
                             else
                                 cmd.Parameters.AddWithValue("@ReceiptImage", receiptImage);
+
+                            if (GoalID == -1)
+                            {
+                                cmd.Parameters.AddWithValue("@GoalID", DBNull.Value);
+                            }
+                            else
+                                cmd.Parameters.AddWithValue("@GoalID", GoalID);
 
                             object R = cmd.ExecuteScalar();
                             InsertedID = Convert.ToInt32(R);

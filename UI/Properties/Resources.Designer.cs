@@ -73,6 +73,16 @@ namespace UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Add_saving321 {
+            get {
+                object obj = ResourceManager.GetObject("Add saving321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Add_transaction_32 {
             get {
                 object obj = ResourceManager.GetObject("Add transaction 32", resourceCulture);
@@ -133,6 +143,16 @@ namespace UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Completed32 {
+            get {
+                object obj = ResourceManager.GetObject("Completed32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Delete_saving32 {
             get {
                 object obj = ResourceManager.GetObject("Delete saving32", resourceCulture);
@@ -146,6 +166,16 @@ namespace UI.Properties {
         internal static System.Drawing.Bitmap deposit32 {
             get {
                 object obj = ResourceManager.GetObject("deposit32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap deposit321 {
+            get {
+                object obj = ResourceManager.GetObject("deposit321", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,6 +243,16 @@ namespace UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Savings32 {
+            get {
+                object obj = ResourceManager.GetObject("Savings32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Savings512 {
             get {
                 object obj = ResourceManager.GetObject("Savings512", resourceCulture);
@@ -263,6 +303,26 @@ namespace UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap transaction321 {
+            get {
+                object obj = ResourceManager.GetObject("transaction321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap transaction322 {
+            get {
+                object obj = ResourceManager.GetObject("transaction322", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap transaction512 {
             get {
                 object obj = ResourceManager.GetObject("transaction512", resourceCulture);
@@ -306,6 +366,16 @@ namespace UI.Properties {
         internal static System.Drawing.Bitmap Withdraw32 {
             get {
                 object obj = ResourceManager.GetObject("Withdraw32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Withdraw321 {
+            get {
+                object obj = ResourceManager.GetObject("Withdraw321", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

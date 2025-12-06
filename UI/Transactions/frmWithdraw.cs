@@ -13,6 +13,16 @@ namespace UI
 {
     public partial class frmWithdraw : Form
     {
+        private void FillCategoriesInComboBox()
+        {
+            DataTable categories = clsCategory.GetAllCategories();
+            cbCategories.Items.Add("None");
+            foreach (DataRow R in categories.Rows)
+            {
+                cbCategories.Items.Add(R[1].ToString());
+            }
+        }
+
         public frmWithdraw()
         {
             InitializeComponent();
@@ -52,6 +62,8 @@ namespace UI
         {
             lblUsername.Text = clsGlobal.LoggedInUser.Username.ToString();
             lblBalance.Text = clsGlobal.LoggedInUser.Balance.ToString();
+            FillCategoriesInComboBox();
+            cbCategories.SelectedIndex = 0;
         }
 
         private void txtDepositAmount_Validating(object sender, CancelEventArgs e)
@@ -96,8 +108,13 @@ namespace UI
             transaction.Date = DateTime.Now;
             transaction.Description = txtDescription.Text.ToString();
             transaction.amount = amount;
-            transaction.CategoryID = -1;
-            transaction.ReceiptImage = null;
+
+            if(cbCategories.SelectedIndex == 0)
+                transaction.CategoryID = -1;
+            else
+                transaction.CategoryID = cbCategories.SelectedIndex;
+
+                transaction.ReceiptImage = null;
 
             if (!transaction.Save())
             {

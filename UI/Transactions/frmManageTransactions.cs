@@ -5,32 +5,121 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace UI
 {
     public partial class frmManageTransactions : Form
     {
+        public enum enMode { All=0,Deposits=1,Expenses=2,Transfers=3};
+        public static enMode Mode;
+
         private int userID;
         private DateTime chosenDate;
 
         BindingSource BS = new BindingSource();
-
         private void refreshNumberOfRecords() => lblNumberOfRecords.Text = dgvTransactions.Rows.Count.ToString();
+
+        private bool CheckForDataRows(DataRow[] rows)
+        {
+            if(rows.Length == 0)
+            {
+                MessageBox.Show("No data found for this screen, enter 'All' or another screen has data", "No data", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
+            return true;
+        }
+
+        //private DataTable MakeDataSource(enMode Mode)
+        //{
+        //    DataTable DataSource = clsTransaction.GetSP_DisplayTransactionsForUser(userID);
+        //    if(DataSource.Rows.Count == 0 && Mode != enMode.All)
+        //    {
+        //        MessageBox.Show("No data exist, choose only 'all' screen");
+        //        this.Close();
+        //        return null;
+        //    }
+
+        //    switch (Mode)
+        //    {
+        //        case enMode.Deposits:
+        //            if (!CheckForDataRows(DataSource.Select("[TransactionTypeName] = 'Income'")))
+        //                this.Close();
+        //            DataSource = DataSource.Select("[TransactionTypeName] = 'Income'").CopyToDataTable();
+        //            break;
+        //        case enMode.Expenses:
+        //            if (!CheckForDataRows(DataSource.Select("[TransactionTypeName] = 'Expense'")))
+        //                this.Close();
+        //            DataSource = DataSource.Select("[TransactionTypeName] = 'Expense'").CopyToDataTable();
+        //            break;
+        //        case enMode.Transfers:
+        //            if (!CheckForDataRows(DataSource.Select("[TransactionTypeName] = 'Transfer'")))
+        //                this.Close();
+        //            DataSource = DataSource.Select("[TransactionTypeName] = 'Transfer'").CopyToDataTable();
+        //            break;
+        //    }
+
+        //    return DataSource;
+        //}
+
+        private DataTable MakeDataSource(enMode Mode)
+        {
+            DataTable dataSource = clsTransaction.GetSP_DisplayTransactionsForUser(userID);
+
+            // If no data and not ALL mode, stop
+            if (dataSource.Rows.Count == 0 && Mode != enMode.All)
+            {
+                MessageBox.Show("No data exist, choose only 'all' screen");
+                this.Close();
+                return null; // VERY IMPORTANT
+            }
+
+            // Build filter based on Mode
+            string filter = null;
+
+            if (Mode == enMode.Deposits)
+                filter = "[TransactionTypeName] = 'Income'";
+            else if (Mode == enMode.Expenses)
+                filter = "[TransactionTypeName] = 'Expense'";
+            else if (Mode == enMode.Transfers)
+                filter = "[TransactionTypeName] = 'Transfer'";
+
+            // If ALL mode or filter is null, return original
+            if (filter == null)
+                return dataSource;
+
+            // Filter rows
+            DataRow[] rows = dataSource.Select(filter);
+
+            // No matching rows
+            if (rows.Length == 0)
+            {
+                MessageBox.Show("No data match this screen");
+                this.Close();
+                return null; // STOP EXECUTION — prevents exception
+            }
+
+            // Safe: rows have at least 1 item
+            return rows.CopyToDataTable();
+        }
+
 
         private void refreshRecords()
         {
-            BS.DataSource = clsTransaction.GetSP_DisplayTransactionsForUser(userID);
+            BS.DataSource = MakeDataSource(Mode);
             dgvTransactions.DataSource = BS;
             refreshNumberOfRecords();
         }
 
-        public frmManageTransactions(int UserID)
+        public frmManageTransactions(int UserID,enMode mode)
         {
             InitializeComponent();
             this.userID = UserID;
+            Mode = mode;
         }
 
         private void loadData()

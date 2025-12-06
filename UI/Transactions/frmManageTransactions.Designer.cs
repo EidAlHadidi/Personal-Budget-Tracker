@@ -39,7 +39,6 @@
             this.txtFilterBy = new System.Windows.Forms.TextBox();
             this.btnWithdraw = new System.Windows.Forms.Button();
             this.btnDeposit = new System.Windows.Forms.Button();
-            this.btnAddTransaction = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvTransactions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -155,7 +154,7 @@
             // btnWithdraw
             // 
             this.btnWithdraw.Image = global::UI.Properties.Resources.Withdraw32;
-            this.btnWithdraw.Location = new System.Drawing.Point(852, 225);
+            this.btnWithdraw.Location = new System.Drawing.Point(949, 230);
             this.btnWithdraw.Name = "btnWithdraw";
             this.btnWithdraw.Size = new System.Drawing.Size(78, 71);
             this.btnWithdraw.TabIndex = 4;
@@ -165,22 +164,12 @@
             // btnDeposit
             // 
             this.btnDeposit.Image = global::UI.Properties.Resources.deposit32;
-            this.btnDeposit.Location = new System.Drawing.Point(949, 225);
+            this.btnDeposit.Location = new System.Drawing.Point(1046, 230);
             this.btnDeposit.Name = "btnDeposit";
             this.btnDeposit.Size = new System.Drawing.Size(78, 71);
             this.btnDeposit.TabIndex = 5;
             this.btnDeposit.UseVisualStyleBackColor = true;
             this.btnDeposit.Click += new System.EventHandler(this.btnDeposit_Click);
-            // 
-            // btnAddTransaction
-            // 
-            this.btnAddTransaction.Image = global::UI.Properties.Resources.Add_transaction_32;
-            this.btnAddTransaction.Location = new System.Drawing.Point(1046, 225);
-            this.btnAddTransaction.Name = "btnAddTransaction";
-            this.btnAddTransaction.Size = new System.Drawing.Size(78, 71);
-            this.btnAddTransaction.TabIndex = 6;
-            this.btnAddTransaction.UseVisualStyleBackColor = true;
-            this.btnAddTransaction.Click += new System.EventHandler(this.btnAddTransaction_Click);
             // 
             // pictureBox1
             // 
@@ -201,7 +190,6 @@
             this.Controls.Add(this.btnWithdraw);
             this.Controls.Add(this.btnDeposit);
             this.Controls.Add(this.txtFilterBy);
-            this.Controls.Add(this.btnAddTransaction);
             this.Controls.Add(this.btnChooseDate);
             this.Controls.Add(this.cbFilterBy);
             this.Controls.Add(this.label3);
@@ -234,7 +222,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbFilterBy;
         private System.Windows.Forms.Button btnChooseDate;
-        private System.Windows.Forms.Button btnAddTransaction;
         private System.Windows.Forms.TextBox txtFilterBy;
         private System.Windows.Forms.Button btnDeposit;
         private System.Windows.Forms.Button btnWithdraw;

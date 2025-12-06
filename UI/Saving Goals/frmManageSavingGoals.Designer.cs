@@ -41,10 +41,12 @@
             this.viewSavingGoalInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteGoalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToCurrentAmountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setCompletedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label1 = new System.Windows.Forms.Label();
+            this.cbIsCompleted = new System.Windows.Forms.ComboBox();
             this.btnAddSavingGoal = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.cbIsCompleted = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSavingGoals)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -145,6 +147,7 @@
             this.dgvSavingGoals.RowTemplate.Height = 24;
             this.dgvSavingGoals.Size = new System.Drawing.Size(1112, 326);
             this.dgvSavingGoals.TabIndex = 25;
+            this.dgvSavingGoals.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvSavingGoals_CellContentDoubleClick);
             // 
             // contextMenuStrip1
             // 
@@ -152,24 +155,28 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewSavingGoalInfoToolStripMenuItem,
             this.updateToolStripMenuItem,
-            this.deleteGoalToolStripMenuItem});
+            this.deleteGoalToolStripMenuItem,
+            this.addToCurrentAmountToolStripMenuItem,
+            this.setCompletedToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(192, 118);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(252, 222);
             // 
             // viewSavingGoalInfoToolStripMenuItem
             // 
             this.viewSavingGoalInfoToolStripMenuItem.Image = global::UI.Properties.Resources.info32;
             this.viewSavingGoalInfoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.viewSavingGoalInfoToolStripMenuItem.Name = "viewSavingGoalInfoToolStripMenuItem";
-            this.viewSavingGoalInfoToolStripMenuItem.Size = new System.Drawing.Size(191, 38);
+            this.viewSavingGoalInfoToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
             this.viewSavingGoalInfoToolStripMenuItem.Text = "View Goal Info";
+            this.viewSavingGoalInfoToolStripMenuItem.Click += new System.EventHandler(this.viewSavingGoalInfoToolStripMenuItem_Click);
             // 
             // updateToolStripMenuItem
             // 
+            this.updateToolStripMenuItem.Enabled = false;
             this.updateToolStripMenuItem.Image = global::UI.Properties.Resources.update32;
             this.updateToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.updateToolStripMenuItem.Name = "updateToolStripMenuItem";
-            this.updateToolStripMenuItem.Size = new System.Drawing.Size(191, 38);
+            this.updateToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
             this.updateToolStripMenuItem.Text = "Update Goal";
             // 
             // deleteGoalToolStripMenuItem
@@ -177,8 +184,27 @@
             this.deleteGoalToolStripMenuItem.Image = global::UI.Properties.Resources.Delete_saving32;
             this.deleteGoalToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.deleteGoalToolStripMenuItem.Name = "deleteGoalToolStripMenuItem";
-            this.deleteGoalToolStripMenuItem.Size = new System.Drawing.Size(191, 38);
+            this.deleteGoalToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
             this.deleteGoalToolStripMenuItem.Text = "Delete Goal";
+            this.deleteGoalToolStripMenuItem.Click += new System.EventHandler(this.deleteGoalToolStripMenuItem_Click);
+            // 
+            // addToCurrentAmountToolStripMenuItem
+            // 
+            this.addToCurrentAmountToolStripMenuItem.Image = global::UI.Properties.Resources.Add_saving32;
+            this.addToCurrentAmountToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.addToCurrentAmountToolStripMenuItem.Name = "addToCurrentAmountToolStripMenuItem";
+            this.addToCurrentAmountToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
+            this.addToCurrentAmountToolStripMenuItem.Text = "Add To Current Amount";
+            this.addToCurrentAmountToolStripMenuItem.Click += new System.EventHandler(this.addToCurrentAmountToolStripMenuItem_Click);
+            // 
+            // setCompletedToolStripMenuItem
+            // 
+            this.setCompletedToolStripMenuItem.Image = global::UI.Properties.Resources.Completed32;
+            this.setCompletedToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.setCompletedToolStripMenuItem.Name = "setCompletedToolStripMenuItem";
+            this.setCompletedToolStripMenuItem.Size = new System.Drawing.Size(251, 38);
+            this.setCompletedToolStripMenuItem.Text = "Set Completed";
+            this.setCompletedToolStripMenuItem.Click += new System.EventHandler(this.setCompletedToolStripMenuItem_Click);
             // 
             // label1
             // 
@@ -190,6 +216,20 @@
             this.label1.Size = new System.Drawing.Size(457, 58);
             this.label1.TabIndex = 23;
             this.label1.Text = "Manage Saving Goals";
+            // 
+            // cbIsCompleted
+            // 
+            this.cbIsCompleted.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbIsCompleted.FormattingEnabled = true;
+            this.cbIsCompleted.Items.AddRange(new object[] {
+            "None",
+            "Yes",
+            "No"});
+            this.cbIsCompleted.Location = new System.Drawing.Point(305, 255);
+            this.cbIsCompleted.Name = "cbIsCompleted";
+            this.cbIsCompleted.Size = new System.Drawing.Size(93, 24);
+            this.cbIsCompleted.TabIndex = 29;
+            this.cbIsCompleted.SelectedIndexChanged += new System.EventHandler(this.cbIsCompleted_SelectedIndexChanged);
             // 
             // btnAddSavingGoal
             // 
@@ -211,24 +251,11 @@
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
             // 
-            // cbIsCompleted
-            // 
-            this.cbIsCompleted.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbIsCompleted.FormattingEnabled = true;
-            this.cbIsCompleted.Items.AddRange(new object[] {
-            "None",
-            "Yes",
-            "No"});
-            this.cbIsCompleted.Location = new System.Drawing.Point(305, 255);
-            this.cbIsCompleted.Name = "cbIsCompleted";
-            this.cbIsCompleted.Size = new System.Drawing.Size(93, 24);
-            this.cbIsCompleted.TabIndex = 29;
-            this.cbIsCompleted.SelectedIndexChanged += new System.EventHandler(this.cbIsCompleted_SelectedIndexChanged);
-            // 
             // frmManageSavingGoals
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(1136, 692);
             this.Controls.Add(this.cbIsCompleted);
             this.Controls.Add(this.txtFilterBy);
@@ -271,5 +298,7 @@
         private System.Windows.Forms.ToolStripMenuItem updateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteGoalToolStripMenuItem;
         private System.Windows.Forms.ComboBox cbIsCompleted;
+        private System.Windows.Forms.ToolStripMenuItem addToCurrentAmountToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem setCompletedToolStripMenuItem;
     }
 }

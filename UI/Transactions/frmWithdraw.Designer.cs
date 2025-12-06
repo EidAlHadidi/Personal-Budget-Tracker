@@ -41,6 +41,8 @@
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.cbCategories = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -118,7 +120,7 @@
             // 
             // btnWithdraw
             // 
-            this.btnWithdraw.Location = new System.Drawing.Point(558, 393);
+            this.btnWithdraw.Location = new System.Drawing.Point(558, 438);
             this.btnWithdraw.Name = "btnWithdraw";
             this.btnWithdraw.Size = new System.Drawing.Size(109, 41);
             this.btnWithdraw.TabIndex = 27;
@@ -130,7 +132,7 @@
             // 
             this.btnClose.CausesValidation = false;
             this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.Location = new System.Drawing.Point(428, 393);
+            this.btnClose.Location = new System.Drawing.Point(428, 438);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(109, 41);
             this.btnClose.TabIndex = 26;
@@ -144,7 +146,7 @@
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(234, 253);
+            this.txtDescription.Location = new System.Drawing.Point(234, 298);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(433, 121);
@@ -154,11 +156,30 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(70, 249);
+            this.label5.Location = new System.Drawing.Point(70, 294);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(127, 25);
             this.label5.TabIndex = 34;
             this.label5.Text = "Description:";
+            // 
+            // cbCategories
+            // 
+            this.cbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCategories.FormattingEnabled = true;
+            this.cbCategories.Location = new System.Drawing.Point(234, 243);
+            this.cbCategories.Name = "cbCategories";
+            this.cbCategories.Size = new System.Drawing.Size(181, 24);
+            this.cbCategories.TabIndex = 35;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(73, 239);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(124, 25);
+            this.label6.TabIndex = 36;
+            this.label6.Text = "Categories:";
             // 
             // frmWithdraw
             // 
@@ -166,7 +187,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnClose;
-            this.ClientSize = new System.Drawing.Size(679, 446);
+            this.ClientSize = new System.Drawing.Size(679, 500);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cbCategories);
             this.Controls.Add(this.txtWithdrawAmount);
             this.Controls.Add(this.lblBalance);
             this.Controls.Add(this.lblUsername);
@@ -202,5 +225,7 @@
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cbCategories;
     }
 }

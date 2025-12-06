@@ -1,4 +1,5 @@
 ﻿ using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -6,7 +7,7 @@ namespace DAL
 {
     public static class DAL_SavingGoals
     {
-        public static bool GetSavingGoalInfoByID(int SavingGoaID,ref int UserID, ref int CategoryID, ref string GoalName, ref decimal TargetAmount, ref decimal CurrentAmount, ref DateTime StartDate, ref DateTime EndDate, ref string Description, ref bool IsCompleted)
+        public static bool GetSavingGoalInfoByID(int SavingGoalID,ref int UserID, ref int CategoryID, ref string GoalName, ref decimal TargetAmount, ref decimal CurrentAmount, ref DateTime StartDate, ref DateTime EndDate, ref string Description, ref bool IsCompleted)
         {
             bool isFound = false;
 
@@ -15,10 +16,10 @@ namespace DAL
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
-                    string query = "SELECT * FROM SavingGoals WHERE SavingGoaID = @SavingGoaID";
+                    string query = "SELECT * FROM SavingGoals WHERE SavingGoalID = @SavingGoalID";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@SavingGoaID", SavingGoaID);
+                        command.Parameters.AddWithValue("@SavingGoalID", SavingGoalID);
 
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -28,7 +29,7 @@ namespace DAL
                             {
                                 isFound = true;
 
-                                SavingGoaID = (int)reader["SavingGoaID"];
+                                SavingGoalID = (int)reader["SavingGoalID"];
                                 CategoryID = (int)reader["CategoryID"];
                                 UserID = (int)reader["UserID"];
                                 GoalName = (string)reader["GoalName"];
@@ -116,7 +117,7 @@ namespace DAL
         }
 
 
-        public static bool UpdateSavingGoal(int SavingGoaID, int UserID,int CategoryID ,string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        public static bool UpdateSavingGoal(int SavingGoalID, int UserID,int CategoryID ,string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
             int rowsAffected = 0;
 
@@ -134,12 +135,12 @@ namespace DAL
 	EndDate = @EndDate,
     CategoryID = @CategoryID,
 	Description = @Description,
-	IsCompleted = @IsCompleted	WHERE SavingGoaID = @SavingGoaID";
+	IsCompleted = @IsCompleted	WHERE SavingGoalID = @SavingGoalID";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
 
-                        command.Parameters.AddWithValue("@SavingGoaID", SavingGoaID);
+                        command.Parameters.AddWithValue("@SavingGoalID", SavingGoalID);
 
                         command.Parameters.AddWithValue("@UserID", UserID);
 
@@ -173,42 +174,42 @@ namespace DAL
             return (rowsAffected > 0);
 
         }
-        public static bool DeleteSavingGoal(int SavingGoaID)
+        public static bool DeleteSavingGoal(int SavingGoalID)
         {
             int rowsAffected = 0;
             try
             {
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
-                    string query = "DELETE SavingGoals WHERE SavingGoaID = @SavingGoaID";
+                    string query = "DELETE SavingGoals WHERE SavingGoalID = @SavingGoalID";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        command.Parameters.AddWithValue("@SavingGoaID", SavingGoaID);
+                        command.Parameters.AddWithValue("@SavingGoalID", SavingGoalID);
 
                         connection.Open();
                         rowsAffected = command.ExecuteNonQuery();
                     }
                 }
             }
-            catch (Exception ex) { throw ex; }
+            catch (Exception ex) {  }
 
             return (rowsAffected > 0);
 
         }
 
-        public static bool IsSavingGoalExist(int SavingGoaID)
+        public static bool IsSavingGoalExist(int SavingGoalID)
         {
             bool isFound = false;
             try
             {
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
-                    string query = "SELECT Found=1 FROM SavingGoals WHERE SavingGoaID= @SavingGoaID";
+                    string query = "SELECT Found=1 FROM SavingGoals WHERE SavingGoalID= @SavingGoalID";
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        command.Parameters.AddWithValue("@SavingGoaID", SavingGoaID);
+                        command.Parameters.AddWithValue("@SavingGoalID", SavingGoalID);
 
                         connection.Open();
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -251,6 +252,7 @@ namespace DAL
             return dt;
         }
 
+        //Other methods
         public static DataTable GetSP_DisplayGoalsForUser(int userID)
         {
             DataTable dt = new DataTable();
@@ -272,6 +274,44 @@ namespace DAL
 
             return dt;
         }
+
+        public static bool GetTotalSavedMoney(int userID,ref decimal CurrentSavedMoney, ref decimal TotalSavedMoney)
+        {
+            using(SqlConnection conn = new SqlConnection(clsDataAccessSettings.ConnectionString))
+            {
+                conn.Open();
+                try
+                {
+                    using (SqlCommand cmd = new SqlCommand("sp_GetTotalMoneySaved", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("UserID", userID);
+
+                        SqlParameter currentMoney = new SqlParameter("@CurrentSavedMoney", SqlDbType.Decimal);
+                        currentMoney.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(currentMoney);
+
+                        SqlParameter TotalMoney = new SqlParameter("@TotalSavedMoney", SqlDbType.Decimal);
+                        TotalMoney.Direction = ParameterDirection.Output;
+                        cmd.Parameters.Add(TotalMoney);
+
+                        cmd.ExecuteNonQuery();
+
+                        CurrentSavedMoney = (decimal)cmd.Parameters["@CurrentSavedMoney"].Value;
+                        TotalSavedMoney = (decimal)cmd.Parameters["@TotalSavedMoney"].Value;
+
+                    }
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+
+            return false;
+        }
+
     }
 
 }

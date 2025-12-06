@@ -150,5 +150,70 @@ namespace UI
 
             refreshNumberOfRecords();
         }
+
+        private void addToCurrentAmountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((bool)dgvSavingGoals.CurrentRow.Cells[8].Value == true)
+            {
+                MessageBox.Show("This goal is completed!", "Completed goal", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            var frm = new frmAddAmountToGoal(Convert.ToInt32(dgvSavingGoals.CurrentRow.Cells[0].Value));
+            frm.ShowDialog();
+            refreshRecords();
+        }
+
+        private void viewSavingGoalInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmSavingGoalInfo(Convert.ToInt32(dgvSavingGoals.CurrentRow.Cells[0].Value));
+            frm.ShowDialog();
+        }
+
+        private void deleteGoalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Are you sure you want to delete this goal?","Delete",
+                MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                if(clsSavingGoal.DeleteSavingGoal(Convert.ToInt32(dgvSavingGoals.CurrentRow.Cells[0].Value)))
+                {
+                    MessageBox.Show("Deleted successfully", "Succeed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Deletion failed, this goal is linked with other data!", "Delete failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            refreshRecords();
+        }
+
+        private void dgvSavingGoals_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var frm = new frmSavingGoalInfo(Convert.ToInt32(dgvSavingGoals.CurrentRow.Cells[0].Value));
+            frm.ShowDialog();
+        }
+
+        private void setCompletedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var goal = clsSavingGoal.Find(Convert.ToInt32(dgvSavingGoals.CurrentRow.Cells[0].Value));
+            if (goal.IsCompleted)
+            {
+                MessageBox.Show("The goal is already completed", "Already Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to make this goal completed?",
+                "Confirm",MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                goal.IsCompleted = true;
+                if(!goal.Save())
+                {
+                    MessageBox.Show("Error occured while setting this goal completed!", "Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                MessageBox.Show("The goal is set to completed", "Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                refreshRecords();
+            }
+        }
     }
 }
