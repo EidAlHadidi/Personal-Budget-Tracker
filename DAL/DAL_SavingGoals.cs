@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -6,7 +6,7 @@ namespace DAL
 {
     public static class DAL_SavingGoals
     {
-        public static bool GetSavingGoalInfoByID(int SavingGoaID, ref int UserID, ref string GoalName, ref decimal TargetAmount, ref decimal CurrentAmount, ref DateTime StartDate, ref DateTime EndDate, ref string Description, ref bool IsCompleted)
+        public static bool GetSavingGoalInfoByID(int SavingGoaID,ref int UserID, ref int CategoryID, ref string GoalName, ref decimal TargetAmount, ref decimal CurrentAmount, ref DateTime StartDate, ref DateTime EndDate, ref string Description, ref bool IsCompleted)
         {
             bool isFound = false;
 
@@ -29,6 +29,7 @@ namespace DAL
                                 isFound = true;
 
                                 SavingGoaID = (int)reader["SavingGoaID"];
+                                CategoryID = (int)reader["CategoryID"];
                                 UserID = (int)reader["UserID"];
                                 GoalName = (string)reader["GoalName"];
                                 TargetAmount = (decimal)reader["TargetAmount"];
@@ -51,7 +52,7 @@ namespace DAL
             return isFound;
 
         }
-        public static int AddNewSavingGoal(int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        public static int AddNewSavingGoal(int UserID, int CategoryID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
 
             int ID = -1;
@@ -60,8 +61,12 @@ namespace DAL
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
                 {
 
-                    string query = @"INSERT INTO SavingGoals VALUES (@UserID, @GoalName, @TargetAmount, @CurrentAmount, @StartDate, @EndDate, @Description, @IsCompleted)
-        SELECT SCOPE_IDENTITY()";
+                    string query = @"INSERT INTO SavingGoals(UserID,CategoryID,GoalName
+                        ,TargetAmount,CurrentAmount,StartDate,EndDate,Description,IsCompleted)
+                        VALUES (@UserID,@CategoryID,@GoalName, 
+                        @TargetAmount, @CurrentAmount, @StartDate, @EndDate, 
+                        @Description, @IsCompleted);
+                        SELECT SCOPE_IDENTITY()";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -74,6 +79,8 @@ namespace DAL
                         command.Parameters.AddWithValue("@TargetAmount", TargetAmount);
 
                         command.Parameters.AddWithValue("@CurrentAmount", CurrentAmount);
+
+                        command.Parameters.AddWithValue("@CategoryID", CategoryID);
 
                         command.Parameters.AddWithValue("@StartDate", StartDate);
 
@@ -109,7 +116,7 @@ namespace DAL
         }
 
 
-        public static bool UpdateSavingGoal(int SavingGoaID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        public static bool UpdateSavingGoal(int SavingGoaID, int UserID,int CategoryID ,string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
             int rowsAffected = 0;
 
@@ -125,6 +132,7 @@ namespace DAL
 	CurrentAmount = @CurrentAmount,
 	StartDate = @StartDate,
 	EndDate = @EndDate,
+    CategoryID = @CategoryID,
 	Description = @Description,
 	IsCompleted = @IsCompleted	WHERE SavingGoaID = @SavingGoaID";
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -138,6 +146,8 @@ namespace DAL
                         command.Parameters.AddWithValue("@GoalName", GoalName);
 
                         command.Parameters.AddWithValue("@TargetAmount", TargetAmount);
+
+                        command.Parameters.AddWithValue("@CategoryID", CategoryID);
 
                         command.Parameters.AddWithValue("@CurrentAmount", CurrentAmount);
 

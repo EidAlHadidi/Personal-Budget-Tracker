@@ -10,6 +10,7 @@ namespace BL
         public enMode Mode = enMode.AddNew;
         public int SavingGoalID { get; set; }
         public int UserID { get; set; }
+        public int CategoryID { get; set; }
         public string GoalName { get; set; }
         public decimal TargetAmount { get; set; }
         public decimal CurrentAmount { get; set; }
@@ -30,13 +31,13 @@ namespace BL
             this.EndDate = default;
             this.Description = default;
             this.IsCompleted = default;
-
+            this.CategoryID = default;
 
             Mode = enMode.AddNew;
 
         }
 
-        private clsSavingGoal(int SavingGoalID, int UserID, string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
+        private clsSavingGoal(int SavingGoalID, int UserID, int CategoryID ,string GoalName, decimal TargetAmount, decimal CurrentAmount, DateTime StartDate, DateTime EndDate, string Description, bool IsCompleted)
         {
             this.SavingGoalID = SavingGoalID;
             this.UserID = UserID;
@@ -47,7 +48,7 @@ namespace BL
             this.EndDate = EndDate;
             this.Description = Description;
             this.IsCompleted = IsCompleted;
-
+            this.CategoryID = CategoryID;
 
             Mode = enMode.Update;
 
@@ -57,7 +58,7 @@ namespace BL
         {
             //call DataAccess Layer 
 
-            this.SavingGoalID = DAL_SavingGoals.AddNewSavingGoal(this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
+            this.SavingGoalID = DAL_SavingGoals.AddNewSavingGoal(this.UserID, this.CategoryID,this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
 
             return (this.SavingGoalID != -1);
 
@@ -67,13 +68,13 @@ namespace BL
         {
             //call DataAccess Layer 
 
-            return DAL_SavingGoals.UpdateSavingGoal(this.SavingGoalID, this.UserID, this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
+            return DAL_SavingGoals.UpdateSavingGoal(this.SavingGoalID, this.UserID, this.CategoryID,this.GoalName, this.TargetAmount, this.CurrentAmount, this.StartDate, this.EndDate, this.Description, this.IsCompleted);
 
         }
 
         public static clsSavingGoal Find(int SavingGoalID)
         {
-            int UserID = default;
+            int UserID = default,CategoryID = default;
             string GoalName = default;
             decimal TargetAmount = default;
             decimal CurrentAmount = default;
@@ -83,8 +84,8 @@ namespace BL
             bool IsCompleted = default;
 
 
-            if (DAL_SavingGoals.GetSavingGoalInfoByID(SavingGoalID, ref UserID, ref GoalName, ref TargetAmount, ref CurrentAmount, ref StartDate, ref EndDate, ref Description, ref IsCompleted))
-                return new clsSavingGoal(SavingGoalID, UserID, GoalName, TargetAmount, CurrentAmount, StartDate, EndDate, Description, IsCompleted);
+            if (DAL_SavingGoals.GetSavingGoalInfoByID(SavingGoalID, ref UserID, ref CategoryID,ref GoalName, ref TargetAmount, ref CurrentAmount, ref StartDate, ref EndDate, ref Description, ref IsCompleted))
+                return new clsSavingGoal(SavingGoalID, UserID, CategoryID,GoalName, TargetAmount, CurrentAmount, StartDate, EndDate, Description, IsCompleted);
             else
                 return null;
 

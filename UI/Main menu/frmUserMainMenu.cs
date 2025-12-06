@@ -80,5 +80,11 @@ namespace UI
             var frm = new frmManageSavingGoals(clsGlobal.LoggedInUserID);
             frm.ShowDialog();
         }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            var frm = new frmAddSavingGoal();
+            frm.ShowDialog();
+        }
     }
 }

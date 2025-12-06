@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmAddSavingGoal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAddSavingGoal.Designer.cs">
+      <DependentUpon>frmAddSavingGoal.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmManageSavingGoals.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmAddSavingGoal.resx">
+      <DependentUpon>frmAddSavingGoal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmManageSavingGoals.resx">
       <DependentUpon>frmManageSavingGoals.cs</DependentUpon>
     </EmbeddedResource>

@@ -53,6 +53,9 @@ namespace UI
         private void btnAddSavingGoal_Click(object sender, EventArgs e)
         {
             //call "add new saving goal" form...
+            var frm = new frmAddSavingGoal();
+            frm.ShowDialog();
+            refreshRecords();
         }
 
         private void cbFilterBy_SelectedIndexChanged(object sender, EventArgs e)    
