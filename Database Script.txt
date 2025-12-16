@@ -1,0 +1,730 @@
+USE [master]
+GO
+/****** Object:  Database [PBT]    Script Date: 12/16/2025 9:02:31 PM ******/
+CREATE DATABASE [PBT]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'PBT', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\PBT.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
+ LOG ON 
+( NAME = N'PBT_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL16.MSSQLSERVER\MSSQL\DATA\PBT_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
+ WITH CATALOG_COLLATION = DATABASE_DEFAULT, LEDGER = OFF
+GO
+ALTER DATABASE [PBT] SET COMPATIBILITY_LEVEL = 160
+GO
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [PBT].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+ALTER DATABASE [PBT] SET ANSI_NULL_DEFAULT OFF 
+GO
+ALTER DATABASE [PBT] SET ANSI_NULLS OFF 
+GO
+ALTER DATABASE [PBT] SET ANSI_PADDING OFF 
+GO
+ALTER DATABASE [PBT] SET ANSI_WARNINGS OFF 
+GO
+ALTER DATABASE [PBT] SET ARITHABORT OFF 
+GO
+ALTER DATABASE [PBT] SET AUTO_CLOSE OFF 
+GO
+ALTER DATABASE [PBT] SET AUTO_SHRINK OFF 
+GO
+ALTER DATABASE [PBT] SET AUTO_UPDATE_STATISTICS ON 
+GO
+ALTER DATABASE [PBT] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+ALTER DATABASE [PBT] SET CURSOR_DEFAULT  GLOBAL 
+GO
+ALTER DATABASE [PBT] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+ALTER DATABASE [PBT] SET NUMERIC_ROUNDABORT OFF 
+GO
+ALTER DATABASE [PBT] SET QUOTED_IDENTIFIER OFF 
+GO
+ALTER DATABASE [PBT] SET RECURSIVE_TRIGGERS OFF 
+GO
+ALTER DATABASE [PBT] SET  ENABLE_BROKER 
+GO
+ALTER DATABASE [PBT] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+ALTER DATABASE [PBT] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+ALTER DATABASE [PBT] SET TRUSTWORTHY OFF 
+GO
+ALTER DATABASE [PBT] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+ALTER DATABASE [PBT] SET PARAMETERIZATION SIMPLE 
+GO
+ALTER DATABASE [PBT] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+ALTER DATABASE [PBT] SET HONOR_BROKER_PRIORITY OFF 
+GO
+ALTER DATABASE [PBT] SET RECOVERY FULL 
+GO
+ALTER DATABASE [PBT] SET  MULTI_USER 
+GO
+ALTER DATABASE [PBT] SET PAGE_VERIFY CHECKSUM  
+GO
+ALTER DATABASE [PBT] SET DB_CHAINING OFF 
+GO
+ALTER DATABASE [PBT] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+ALTER DATABASE [PBT] SET TARGET_RECOVERY_TIME = 60 SECONDS 
+GO
+ALTER DATABASE [PBT] SET DELAYED_DURABILITY = DISABLED 
+GO
+ALTER DATABASE [PBT] SET ACCELERATED_DATABASE_RECOVERY = OFF  
+GO
+EXEC sys.sp_db_vardecimal_storage_format N'PBT', N'ON'
+GO
+ALTER DATABASE [PBT] SET QUERY_STORE = ON
+GO
+ALTER DATABASE [PBT] SET QUERY_STORE (OPERATION_MODE = READ_WRITE, CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 30), DATA_FLUSH_INTERVAL_SECONDS = 900, INTERVAL_LENGTH_MINUTES = 60, MAX_STORAGE_SIZE_MB = 1000, QUERY_CAPTURE_MODE = AUTO, SIZE_BASED_CLEANUP_MODE = AUTO, MAX_PLANS_PER_QUERY = 200, WAIT_STATS_CAPTURE_MODE = ON)
+GO
+USE [PBT]
+GO
+/****** Object:  Table [dbo].[Budgets]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Budgets](
+	[BudgetID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+	[CategoryID] [int] NOT NULL,
+	[Amount] [decimal](19, 4) NULL,
+	[TotalSpent] [decimal](19, 4) NULL,
+	[IsBudgetExceeded] [bit] NULL,
+	[StartDate] [date] NOT NULL,
+	[EndDate] [date] NOT NULL,
+ CONSTRAINT [PK_Budgets] PRIMARY KEY CLUSTERED 
+(
+	[BudgetID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Categories]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categories](
+	[CategoryID] [int] NOT NULL,
+	[CategoryName] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_Categories] PRIMARY KEY CLUSTERED 
+(
+	[CategoryID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Currencies]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Currencies](
+	[CurrencyID] [int] IDENTITY(1,1) NOT NULL,
+	[CurrencyCode] [nvarchar](3) NOT NULL,
+	[CurrencyName] [nvarchar](50) NOT NULL,
+ CONSTRAINT [PK_Currencies] PRIMARY KEY CLUSTERED 
+(
+	[CurrencyID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Reports]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Reports](
+	[ReportID] [int] NOT NULL,
+	[UserID] [int] NOT NULL,
+	[ReportTypeID] [int] NOT NULL,
+	[ReportData] [nvarchar](max) NOT NULL,
+	[GeneratedAt] [datetime] NOT NULL,
+	[Description] [nvarchar](max) NULL,
+ CONSTRAINT [PK_Reports] PRIMARY KEY CLUSTERED 
+(
+	[ReportID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SavingGoals]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SavingGoals](
+	[SavingGoalID] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [int] NOT NULL,
+	[CategoryID] [int] NOT NULL,
+	[GoalName] [nvarchar](256) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[TargetAmount] [decimal](19, 4) NOT NULL,
+	[CurrentAmount] [decimal](19, 4) NOT NULL,
+	[StartDate] [date] NOT NULL,
+	[EndDate] [date] NULL,
+	[IsCompleted] [bit] NOT NULL,
+ CONSTRAINT [PK_SavingGoals] PRIMARY KEY CLUSTERED 
+(
+	[SavingGoalID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SystemUsers]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SystemUsers](
+	[SystemUserID] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nvarchar](256) NOT NULL,
+	[Password] [nvarchar](max) NOT NULL,
+	[Permissions] [int] NOT NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Transactions]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Transactions](
+	[TransactionID] [int] IDENTITY(1,1) NOT NULL,
+	[UserID] [int] NOT NULL,
+	[TransactionTypeID] [int] NOT NULL,
+	[CategoryID] [int] NULL,
+	[Date] [date] NOT NULL,
+	[Time] [time](7) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+	[Amount] [decimal](19, 4) NOT NULL,
+	[ReceiptImage] [nvarchar](max) NULL,
+	[GoalID] [int] NULL,
+ CONSTRAINT [PK_Transactions] PRIMARY KEY CLUSTERED 
+(
+	[TransactionID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TransactionTypes]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TransactionTypes](
+	[TransactionTypeID] [int] NOT NULL,
+	[TransactionTypeName] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_TransactionTypes] PRIMARY KEY CLUSTERED 
+(
+	[TransactionTypeID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users](
+	[UserID] [int] IDENTITY(1,1) NOT NULL,
+	[Username] [nvarchar](256) NOT NULL,
+	[Password] [nvarchar](max) NOT NULL,
+	[PrimaryCurrencyID] [int] NOT NULL,
+	[Balance] [decimal](19, 4) NOT NULL,
+ CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
+(
+	[UserID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (1, N'Food')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (2, N'Transportation')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (3, N'Housing')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (4, N'Utilities')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (5, N'Health')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (6, N'Entertainment')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (7, N'Education')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (8, N'Personal Care')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (9, N'Debt Payments')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (10, N'Gifts')
+GO
+INSERT [dbo].[Categories] ([CategoryID], [CategoryName]) VALUES (11, N'Miscellaneous')
+GO
+SET IDENTITY_INSERT [dbo].[Currencies] ON 
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (1, N'AFA', N'Afghan Afghani')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (2, N'ALL', N'Albanian Lek')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (3, N'DZD', N'Algerian Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (4, N'AOA', N'Angolan Kwanza')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (5, N'ARS', N'Argentine Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (6, N'AMD', N'Armenian Dram')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (7, N'AWG', N'Aruban Florin')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (8, N'AUD', N'Australian Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (9, N'AZN', N'Azerbaijani Manat')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (10, N'BSD', N'Bahamian Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (11, N'BHD', N'Bahraini Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (12, N'BDT', N'Bangladeshi Taka')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (13, N'BBD', N'Barbadian Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (14, N'BYR', N'Belarusian Ruble')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (15, N'BEF', N'Belgian Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (16, N'BZD', N'Belize Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (17, N'BMD', N'Bermudan Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (18, N'BTN', N'Bhutanese Ngultrum')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (19, N'BTC', N'Bitcoin')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (20, N'BOB', N'Bolivian Boliviano')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (21, N'BAM', N'Bosnia-Herzegovina Convertible Mark')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (22, N'BWP', N'Botswanan Pula')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (23, N'BRL', N'Brazilian Real')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (24, N'GBP', N'British Pound Sterling')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (25, N'BND', N'Brunei Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (26, N'BGN', N'Bulgarian Lev')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (27, N'BIF', N'Burundian Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (28, N'KHR', N'Cambodian Riel')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (29, N'CAD', N'Canadian Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (30, N'CVE', N'Cape Verdean Escudo')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (31, N'KYD', N'Cayman Islands Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (32, N'XOF', N'CFA Franc BCEAO')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (33, N'XAF', N'CFA Franc BEAC')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (34, N'XPF', N'CFP Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (35, N'CLP', N'Chilean Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (36, N'CLF', N'Chilean Unit of Account')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (37, N'CNY', N'Chinese Yuan')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (38, N'COP', N'Colombian Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (39, N'KMF', N'Comorian Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (40, N'CDF', N'Congolese Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (41, N'CRC', N'Costa Rican Col?n')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (42, N'HRK', N'Croatian Kuna')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (43, N'CUC', N'Cuban Convertible Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (44, N'CZK', N'Czech Republic Koruna')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (45, N'DKK', N'Danish Krone')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (46, N'DJF', N'Djiboutian Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (47, N'DOP', N'Dominican Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (48, N'XCD', N'East Caribbean Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (49, N'EGP', N'Egyptian Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (50, N'ERN', N'Eritrean Nakfa')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (51, N'EEK', N'Estonian Kroon')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (52, N'ETB', N'Ethiopian Birr')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (53, N'EUR', N'Euro')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (54, N'FKP', N'Falkland Islands Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (55, N'FJD', N'Fijian Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (56, N'GMD', N'Gambian Dalasi')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (57, N'GEL', N'Georgian Lari')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (58, N'DEM', N'German Mark')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (59, N'GHS', N'Ghanaian Cedi')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (60, N'GIP', N'Gibraltar Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (61, N'GRD', N'Greek Drachma')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (62, N'GTQ', N'Guatemalan Quetzal')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (63, N'GNF', N'Guinean Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (64, N'GYD', N'Guyanaese Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (65, N'HTG', N'Haitian Gourde')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (66, N'HNL', N'Honduran Lempira')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (67, N'HKD', N'Hong Kong Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (68, N'HUF', N'Hungarian Forint')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (69, N'ISK', N'Icelandic Kr?na')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (70, N'INR', N'Indian Rupee')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (71, N'IDR', N'Indonesian Rupiah')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (72, N'IRR', N'Iranian Rial')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (73, N'IQD', N'Iraqi Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (74, N'ILS', N'Israeli New Sheqel')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (75, N'ITL', N'Italian Lira')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (76, N'JMD', N'Jamaican Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (77, N'JPY', N'Japanese Yen')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (78, N'JOD', N'Jordanian Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (79, N'KZT', N'Kazakhstani Tenge')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (80, N'KES', N'Kenyan Shilling')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (81, N'KWD', N'Kuwaiti Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (82, N'KGS', N'Kyrgystani Som')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (83, N'LAK', N'Laotian Kip')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (84, N'LVL', N'Latvian Lats')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (85, N'LBP', N'Lebanese Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (86, N'LSL', N'Lesotho Loti')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (87, N'LRD', N'Liberian Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (88, N'LYD', N'Libyan Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (89, N'LTC', N'Litecoin')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (90, N'LTL', N'Lithuanian Litas')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (91, N'MOP', N'Macanese Pataca')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (92, N'MKD', N'Macedonian Denar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (93, N'MGA', N'Malagasy Ariary')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (94, N'MWK', N'Malawian Kwacha')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (95, N'MYR', N'Malaysian Ringgit')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (96, N'MVR', N'Maldivian Rufiyaa')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (97, N'MRO', N'Mauritanian Ouguiya')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (98, N'MUR', N'Mauritian Rupee')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (99, N'MXN', N'Mexican Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (100, N'MDL', N'Moldovan Leu')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (101, N'MNT', N'Mongolian Tugrik')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (102, N'MAD', N'Moroccan Dirham')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (103, N'MZM', N'Mozambican Metical')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (104, N'MMK', N'Myanmar Kyat')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (105, N'NAD', N'Namibian Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (106, N'NPR', N'Nepalese Rupee')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (107, N'ANG', N'Netherlands Antillean Guilder')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (108, N'TWD', N'New Taiwan Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (109, N'NZD', N'New Zealand Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (110, N'NIO', N'Nicaraguan C?rdoba')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (111, N'NGN', N'Nigerian Naira')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (112, N'KPW', N'North Korean Won')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (113, N'NOK', N'Norwegian Krone')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (114, N'OMR', N'Omani Rial')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (115, N'PKR', N'Pakistani Rupee')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (116, N'PAB', N'Panamanian Balboa')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (117, N'PGK', N'Papua New Guinean Kina')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (118, N'PYG', N'Paraguayan Guarani')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (119, N'PEN', N'Peruvian Nuevo Sol')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (120, N'PHP', N'Philippine Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (121, N'PLN', N'Polish Zloty')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (122, N'QAR', N'Qatari Rial')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (123, N'RON', N'Romanian Leu')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (124, N'RUB', N'Russian Ruble')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (125, N'RWF', N'Rwandan Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (126, N'SVC', N'Salvadoran Col?n')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (127, N'WST', N'Samoan Tala')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (128, N'STD', N'S?o Tomé and Pr?ncipe Dobra')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (129, N'SAR', N'Saudi Riyal')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (130, N'RSD', N'Serbian Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (131, N'SCR', N'Seychellois Rupee')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (132, N'SLL', N'Sierra Leonean Leone')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (133, N'SGD', N'Singapore Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (134, N'SKK', N'Slovak Koruna')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (135, N'SBD', N'Solomon Islands Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (136, N'SOS', N'Somali Shilling')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (137, N'ZAR', N'South African Rand')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (138, N'KRW', N'South Korean Won')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (139, N'SSP', N'South Sudanese Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (140, N'XDR', N'Special Drawing Rights')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (141, N'LKR', N'Sri Lankan Rupee')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (142, N'SHP', N'St. Helena Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (143, N'SDG', N'Sudanese Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (144, N'SRD', N'Surinamese Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (145, N'SZL', N'Swazi Lilangeni')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (146, N'SEK', N'Swedish Krona')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (147, N'CHF', N'Swiss Franc')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (148, N'SYP', N'Syrian Pound')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (149, N'TJS', N'Tajikistani Somoni')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (150, N'TZS', N'Tanzanian Shilling')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (151, N'THB', N'Thai Baht')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (152, N'TOP', N'Tongan Paanga')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (153, N'TTD', N'Trinidad & Tobago Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (154, N'TND', N'Tunisian Dinar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (155, N'TRY', N'Turkish Lira')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (156, N'TMT', N'Turkmenistani Manat')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (157, N'UGX', N'Ugandan Shilling')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (158, N'UAH', N'Ukrainian Hryvnia')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (159, N'AED', N'United Arab Emirates Dirham')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (160, N'UYU', N'Uruguayan Peso')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (161, N'USD', N'US Dollar')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (162, N'UZS', N'Uzbekistan Som')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (163, N'VUV', N'Vanuatu Vatu')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (164, N'VEF', N'Venezuelan Bol?var')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (165, N'VND', N'Vietnamese Dong')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (166, N'YER', N'Yemeni Rial')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (167, N'ZMK', N'Zambian Kwacha')
+GO
+INSERT [dbo].[Currencies] ([CurrencyID], [CurrencyCode], [CurrencyName]) VALUES (168, N'ZWL', N'Zimbabwean dollar')
+GO
+SET IDENTITY_INSERT [dbo].[Currencies] OFF
+GO
+INSERT [dbo].[TransactionTypes] ([TransactionTypeID], [TransactionTypeName]) VALUES (1, N'Income')
+GO
+INSERT [dbo].[TransactionTypes] ([TransactionTypeID], [TransactionTypeName]) VALUES (2, N'Expense')
+GO
+INSERT [dbo].[TransactionTypes] ([TransactionTypeID], [TransactionTypeName]) VALUES (3, N'Transfer')
+GO
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_Balance]  DEFAULT ((0)) FOR [Balance]
+GO
+ALTER TABLE [dbo].[Budgets]  WITH CHECK ADD  CONSTRAINT [FK_Budgets_Categories] FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[Budgets] CHECK CONSTRAINT [FK_Budgets_Categories]
+GO
+ALTER TABLE [dbo].[Budgets]  WITH CHECK ADD  CONSTRAINT [FK_Budgets_Users] FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[Budgets] CHECK CONSTRAINT [FK_Budgets_Users]
+GO
+ALTER TABLE [dbo].[Reports]  WITH CHECK ADD  CONSTRAINT [FK_Reports_Users] FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[Reports] CHECK CONSTRAINT [FK_Reports_Users]
+GO
+ALTER TABLE [dbo].[SavingGoals]  WITH CHECK ADD  CONSTRAINT [FK_SavingGoals_Categories] FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[SavingGoals] CHECK CONSTRAINT [FK_SavingGoals_Categories]
+GO
+ALTER TABLE [dbo].[SavingGoals]  WITH CHECK ADD  CONSTRAINT [FK_SavingGoals_Users] FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[SavingGoals] CHECK CONSTRAINT [FK_SavingGoals_Users]
+GO
+ALTER TABLE [dbo].[Transactions]  WITH CHECK ADD  CONSTRAINT [FK_Transactions_SavingGoals] FOREIGN KEY([GoalID])
+REFERENCES [dbo].[SavingGoals] ([SavingGoalID])
+GO
+ALTER TABLE [dbo].[Transactions] CHECK CONSTRAINT [FK_Transactions_SavingGoals]
+GO
+ALTER TABLE [dbo].[Transactions]  WITH CHECK ADD  CONSTRAINT [FK_Transactions_Transactions] FOREIGN KEY([CategoryID])
+REFERENCES [dbo].[Categories] ([CategoryID])
+GO
+ALTER TABLE [dbo].[Transactions] CHECK CONSTRAINT [FK_Transactions_Transactions]
+GO
+ALTER TABLE [dbo].[Transactions]  WITH CHECK ADD  CONSTRAINT [FK_Transactions_TransactionTypes] FOREIGN KEY([TransactionTypeID])
+REFERENCES [dbo].[TransactionTypes] ([TransactionTypeID])
+GO
+ALTER TABLE [dbo].[Transactions] CHECK CONSTRAINT [FK_Transactions_TransactionTypes]
+GO
+ALTER TABLE [dbo].[Transactions]  WITH CHECK ADD  CONSTRAINT [FK_Transactions_Users] FOREIGN KEY([UserID])
+REFERENCES [dbo].[Users] ([UserID])
+GO
+ALTER TABLE [dbo].[Transactions] CHECK CONSTRAINT [FK_Transactions_Users]
+GO
+ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_Currencies] FOREIGN KEY([PrimaryCurrencyID])
+REFERENCES [dbo].[Currencies] ([CurrencyID])
+GO
+ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Currencies]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_DisplayGoalsForUser]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create procedure [dbo].[sp_DisplayGoalsForUser]
+@UserID int
+as
+begin
+	select SavingGoalID,Categories.CategoryName,GoalName,Description,TargetAmount,CurrentAmount,StartDate,EndDate,IsCompleted
+	from SavingGoals
+	inner join Categories on SavingGoals.CategoryID = Categories.CategoryID
+	where UserID = @UserID
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sp_DisplayTransactionsForUser]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[sp_DisplayTransactionsForUser]
+@UserID int
+as
+begin
+	select 
+	TransactionID,
+	TransactionTypes.TransactionTypeName,
+	Categories.CategoryName,
+	Date,
+	Time,
+	Description,
+	Amount,
+	GoalID
+	from transactions 
+	inner join TransactionTypes on Transactions.TransactionTypeID = TransactionTypes.TransactionTypeID
+	left outer join Categories on Categories.CategoryID = Transactions.CategoryID
+	where UserID = @UserID
+end
+GO
+/****** Object:  StoredProcedure [dbo].[sp_GetTotalMoneySaved]    Script Date: 12/16/2025 9:02:31 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE procedure [dbo].[sp_GetTotalMoneySaved]
+@CurrentSavedMoney decimal(19,4) output,
+@TotalSavedMoney decimal(19,4) output,
+@UserID int
+as
+begin
+	select @CurrentSavedMoney = sum(CurrentAmount) from 
+	SavingGoals where UserID = @UserID and IsCompleted = 0;
+	select @TotalSavedMoney = sum(CurrentAmount) from
+	SavingGoals where UserID = @UserID;
+
+	if @CurrentSavedMoney is null 
+		set @CurrentSavedMoney = 0;
+	if @TotalSavedMoney is null
+		set @TotalSavedMoney = 0;
+
+end
+GO
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'1 Spending by category
+2 Income vs Expense over time
+3 Progress toward saving goals' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Reports', @level2type=N'COLUMN',@level2name=N'ReportTypeID'
+GO
+USE [master]
+GO
+ALTER DATABASE [PBT] SET  READ_WRITE 
+GO
