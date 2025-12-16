@@ -47,6 +47,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmChangeUserPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmChangeUserPassword.Designer.cs">
+      <DependentUpon>frmChangeUserPassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCreateSystemUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCreateSystemUser.Designer.cs">
+      <DependentUpon>frmCreateSystemUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmCreateUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCreateUser.Designer.cs">
+      <DependentUpon>frmCreateUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Saving Goals\ctrlSavingGoalInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,6 +146,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmChangeUserPassword.resx">
+      <DependentUpon>frmChangeUserPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCreateSystemUser.resx">
+      <DependentUpon>frmCreateSystemUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCreateUser.resx">
+      <DependentUpon>frmCreateUser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Saving Goals\ctrlSavingGoalInfo.resx">
       <DependentUpon>ctrlSavingGoalInfo.cs</DependentUpon>
     </EmbeddedResource>

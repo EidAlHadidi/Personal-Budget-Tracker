@@ -40,6 +40,24 @@ namespace UI
         {
             Application.Exit();
         }
+
+        private void createUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmCreateUser();
+            frm.ShowDialog();
+        }
+
+        private void createSystemUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmCreateSystemUser();
+            frm.ShowDialog();
+        }
+
+        private void changePasswordToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var frm = new frmChangeUserPassword(UI.enMode.Admin, clsGlobal.LoggedInSystemUserID);
+            frm.ShowDialog();
+        }
     }
 
 }

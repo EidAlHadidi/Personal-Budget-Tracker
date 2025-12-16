@@ -289,10 +289,14 @@ namespace DAL
 
                         SqlParameter currentMoney = new SqlParameter("@CurrentSavedMoney", SqlDbType.Decimal);
                         currentMoney.Direction = ParameterDirection.Output;
+                        currentMoney.Precision = 18;   // total digits
+                        currentMoney.Scale = 2;
                         cmd.Parameters.Add(currentMoney);
 
                         SqlParameter TotalMoney = new SqlParameter("@TotalSavedMoney", SqlDbType.Decimal);
                         TotalMoney.Direction = ParameterDirection.Output;
+                        TotalMoney.Precision = 18;
+                        TotalMoney.Scale = 2;
                         cmd.Parameters.Add(TotalMoney);
 
                         cmd.ExecuteNonQuery();

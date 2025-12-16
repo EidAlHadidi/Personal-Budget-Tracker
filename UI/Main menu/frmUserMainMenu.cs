@@ -13,6 +13,7 @@ namespace UI
 {
     public partial class frmUserMainMenu : Form
     {
+        clsUser _user;
         public frmUserMainMenu()
         {
             InitializeComponent();
@@ -89,8 +90,8 @@ namespace UI
             bool Saved = clsSavingGoal.GetTotalSavedMoney(clsGlobal.LoggedInUserID, ref CurrentSavedMoney, ref TotalSavedMoney);
             if (Saved)
             {
-                MessageBox.Show($"Current Saved Money = {CurrentSavedMoney}\n" +
-                                $"Total Saved Money = {TotalSavedMoney}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Current Saved Money = {CurrentSavedMoney:F2}\n" +
+                                $"Total Saved Money = {TotalSavedMoney:F2}", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
@@ -120,6 +121,34 @@ namespace UI
         {
             var frm = new frmManageTransactions(clsGlobal.LoggedInUserID, frmManageTransactions.enMode.Transfers);
             frm.ShowDialog();
+        }
+
+        private void changePasswordToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var frm = new frmChangeUserPassword(UI.enMode.User, clsGlobal.LoggedInUserID);
+            frm.ShowDialog();
+        }
+
+        private void frmUserMainMenu_Load(object sender, EventArgs e)
+        {
+            _user = clsUser.Find(clsGlobal.LoggedInUserID);
+            lblUserID.Text = _user.UserID.ToString();
+            lblUsername.Text = _user.Username.ToString();
+            lblBalance.Text = _user.Balance.ToString();
+
+            decimal CurrentSavedMoney = -1;
+            decimal TotalSavedMoney = -1;
+            bool Succeed = clsSavingGoal.GetTotalSavedMoney(clsGlobal.LoggedInUserID, ref CurrentSavedMoney, ref TotalSavedMoney);
+            if (Succeed)
+            {
+                lblCurrentMoneySaved.Text = CurrentSavedMoney.ToString();
+                lblTotalMoneySaved.Text = TotalSavedMoney.ToString();
+            }
+            else
+            {
+                lblCurrentMoneySaved.ResetText();
+                lblTotalMoneySaved.ResetText();
+            }
         }
     }
 }
