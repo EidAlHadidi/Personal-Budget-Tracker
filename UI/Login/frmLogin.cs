@@ -188,5 +188,19 @@ namespace UI
         {
             this.Close();
         }
+
+        private void lblCreateAccount_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if(clsGlobal.LoginMode == clsGlobal.enLoginMode.User)
+            {
+                var frm = new frmCreateUser();
+                frm.ShowDialog();
+            }
+            else if(clsGlobal.LoginMode == clsGlobal.enLoginMode.Admin)
+            {
+                var frm = new frmCreateSystemUser();
+                frm.ShowDialog();
+            }
+        }
     }
 }

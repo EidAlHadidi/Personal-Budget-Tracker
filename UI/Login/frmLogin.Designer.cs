@@ -39,6 +39,7 @@
             this.pbAdminPicture = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.cbRememberMe = new System.Windows.Forms.CheckBox();
+            this.lblCreateAccount = new System.Windows.Forms.LinkLabel();
             ((System.ComponentModel.ISupportInitialize)(this.pbAdminPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -156,12 +157,24 @@
             this.cbRememberMe.Text = "Remember me";
             this.cbRememberMe.UseVisualStyleBackColor = true;
             // 
+            // lblCreateAccount
+            // 
+            this.lblCreateAccount.AutoSize = true;
+            this.lblCreateAccount.Location = new System.Drawing.Point(530, 315);
+            this.lblCreateAccount.Name = "lblCreateAccount";
+            this.lblCreateAccount.Size = new System.Drawing.Size(98, 16);
+            this.lblCreateAccount.TabIndex = 11;
+            this.lblCreateAccount.TabStop = true;
+            this.lblCreateAccount.Text = "Create Account";
+            this.lblCreateAccount.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblCreateAccount_LinkClicked);
+            // 
             // frmLogin
             // 
             this.AcceptButton = this.btnLogin;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(900, 471);
+            this.Controls.Add(this.lblCreateAccount);
             this.Controls.Add(this.cbRememberMe);
             this.Controls.Add(this.pbAdminPicture);
             this.Controls.Add(this.btnMode);
@@ -197,6 +210,7 @@
         private System.Windows.Forms.Button btnMode;
         private System.Windows.Forms.PictureBox pbAdminPicture;
         private System.Windows.Forms.CheckBox cbRememberMe;
+        private System.Windows.Forms.LinkLabel lblCreateAccount;
     }
 }
 

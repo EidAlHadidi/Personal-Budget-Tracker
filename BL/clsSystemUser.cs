@@ -118,6 +118,7 @@ namespace BL
 
         public static bool isSystemUserExist(int SystemUserID) { return DAL_SystemUsers.IsSystemUserExist(SystemUserID); }
 
+        public static bool isSystemUserExist(string username) => DAL_SystemUsers.IsSystemUserExist(username);
 
     }
 

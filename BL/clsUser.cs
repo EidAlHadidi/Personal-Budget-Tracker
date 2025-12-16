@@ -136,6 +136,8 @@ namespace BL
 
         public static bool isUserExist(int UserID) { return DAL_Users.IsUserExist(UserID); }
 
+        public static bool isUserExist(string username) { return DAL_Users.IsUserExist(username); }
+
     }
 
 }

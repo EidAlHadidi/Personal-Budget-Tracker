@@ -44,6 +44,13 @@ namespace UI
                 MessageBox.Show("Not all fields filled correctly!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if (clsSystemUser.isSystemUserExist(txtUsername.Text))
+            {
+                MessageBox.Show("There is a system user with this username", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             _user = new clsSystemUser();
             _user.Username = txtUsername.Text.Trim();
             _user.Password = clsGlobal.ComputeHash(txtPassword.Text);

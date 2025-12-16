@@ -216,6 +216,30 @@ namespace DAL
 
         }
 
+        public static bool IsSystemUserExist(string username)
+        {
+            bool isFound = false;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = "SELECT Found=1 FROM SystemUsers WHERE Username= @Username";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@Username", username);
+
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            isFound = reader.HasRows;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            return isFound;
+        }
         public static DataTable GetAllSystemUsers()
         {
 

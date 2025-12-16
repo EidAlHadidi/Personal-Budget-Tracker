@@ -222,6 +222,31 @@ namespace DAL
 
         }
 
+        public static bool IsUserExist(string username)
+        {
+            bool isFound = false;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.ConnectionString))
+                {
+                    string query = "SELECT Found=1 FROM Users WHERE Username= @Username";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+
+                        command.Parameters.AddWithValue("@Username", username);
+
+                        connection.Open();
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            isFound = reader.HasRows;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { throw ex; }
+            return isFound;
+        }
+
         public static DataTable GetAllUsers()
         {
 
@@ -248,6 +273,7 @@ namespace DAL
             return dt;
         }
 
+        
 
     }
 
