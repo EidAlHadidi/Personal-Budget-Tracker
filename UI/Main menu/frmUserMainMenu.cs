@@ -63,18 +63,21 @@ namespace UI
         {
             var frm = new frmDeposit();
             frm.ShowDialog();
+            RefreshData();
         }
 
         private void withdrawToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new frmWithdraw();
             frm.ShowDialog();
+            RefreshData();
         }
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             var frm = new frmManageSavingGoals(clsGlobal.LoggedInUserID);
             frm.ShowDialog();
+            RefreshData();
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -129,7 +132,7 @@ namespace UI
             frm.ShowDialog();
         }
 
-        private void frmUserMainMenu_Load(object sender, EventArgs e)
+        private void RefreshData()
         {
             _user = clsUser.Find(clsGlobal.LoggedInUserID);
             lblUserID.Text = _user.UserID.ToString();
@@ -149,6 +152,11 @@ namespace UI
                 lblCurrentMoneySaved.ResetText();
                 lblTotalMoneySaved.ResetText();
             }
+        }
+
+        private void frmUserMainMenu_Load(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
